@@ -1,0 +1,5 @@
+{
+  "version_variable": "your_module/__init__.py:__version__",
+  "branch": "main",
+  "upload_to_pypi": true
+}
