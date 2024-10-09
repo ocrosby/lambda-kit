@@ -2,6 +2,7 @@ import json
 
 from aws_lambda_typing import context as lambda_context
 
+
 def lambda_handler(event: dict, context: lambda_context.Context):
     """
     AWS Lambda handler function.
@@ -21,11 +22,6 @@ def lambda_handler(event: dict, context: lambda_context.Context):
     message = f"Hello, {name}!"
 
     # Create the response object
-    response = {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": message
-        })
-    }
+    response = {"statusCode": 200, "body": json.dumps({"message": message})}
 
     return response

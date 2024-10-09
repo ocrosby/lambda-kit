@@ -4,9 +4,8 @@ from click.testing import CliRunner
 from lambda_packager.cli import cli
 
 
-def test_package_function(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
-    # Mock os.path.exists to always return True
-    monkeypatch.setattr("os.path.exists", lambda x: True)
+def test_package_function(runner: CliRunner) -> None:
+    source_directory = "../data/lambda1"
 
     result = runner.invoke(
         cli,
@@ -15,18 +14,20 @@ def test_package_function(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) ->
             "--function-name",
             "test-function",
             "--source-dir",
-            "src",
+            source_directory,
             "--output-dir",
             "dist",
         ],
     )
     assert result.exit_code == 0
     assert "Packaging Lambda function: test-function" in result.output
-    assert "Source directory: src" in result.output
+    assert f"Source directory: {source_directory}" in result.output
     assert "Output directory: dist" in result.output
 
 
 def test_package_layer(runner: CliRunner) -> None:
+    source_directory = "../data/lambda1"
+
     result = runner.invoke(
         cli,
         [
@@ -34,12 +35,12 @@ def test_package_layer(runner: CliRunner) -> None:
             "--layer-name",
             "test-layer",
             "--source-dir",
-            "src",
+            source_directory,
             "--output-dir",
             "dist",
         ],
     )
     assert result.exit_code == 0
     assert "Packaging Lambda layer: test-layer" in result.output
-    assert "Source directory: src" in result.output
+    assert f"Source directory: {source_directory}" in result.output
     assert "Output directory: dist" in result.output
