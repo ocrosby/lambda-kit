@@ -2,8 +2,8 @@ import click
 
 
 @click.group()
-def cli():
-    """CLI tool for packaging and deploying Python Lambda functions and Lambda layers."""
+def cli() -> None:
+    """CLI tool for packaging Python Lambda components."""
 
 
 @cli.command()
@@ -20,7 +20,7 @@ def cli():
     type=click.Path(),
     help="Path to the output directory.",
 )
-def package_function(function_name: str, source_dir: str, output_dir: str):
+def package_function(function_name: str, source_dir: str, output_dir: str) -> None:
     """Package Lambda functions."""
     click.echo(f"Packaging Lambda function: {function_name}")
     click.echo(f"Source directory: {source_dir}")
@@ -42,7 +42,7 @@ def package_function(function_name: str, source_dir: str, output_dir: str):
     type=click.Path(),
     help="Path to the output directory.",
 )
-def package_layer(layer_name, source_dir, output_dir):
+def package_layer(layer_name: str, source_dir: str, output_dir: str) -> None:
     """Package Lambda layers."""
     click.echo(f"Packaging Lambda layer: {layer_name}")
     click.echo(f"Source directory: {source_dir}")

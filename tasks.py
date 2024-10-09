@@ -1,9 +1,10 @@
-from invoke import Context, task  # type: ignore[attr-defined]
+from invoke import Collection, Context, task  # type: ignore[attr-defined]
 
 
 @task(aliases=["c"])
 def clean(c: Context) -> None:
     """Clean up build artifacts."""
+    c.run("echo 'Cleaning up build artifacts ...'")
     c.run("find . -name '*.pyc' -delete")
     c.run("find . -name '.coverage' -delete")
     c.run("find . -name 'junit.xml' -delete")
@@ -27,10 +28,18 @@ def install(c: Context, dev: bool = False) -> None:
         c.run("pip install .")
 
 
-@task(aliases=["l"])
+@task(aliases=["f"])
+def format_code(c: Context) -> None:
+    """Format code with black and isort."""
+    c.run("echo 'Formatting code ...'")
+    c.run("black .")
+    c.run("isort .")
+
+
+@task(aliases=["l"], pre=[format_code])
 def lint(c: Context) -> None:
     """Run linters (flake8 and pylint)."""
-    c.run("echo 'Running linters ...'")
+    c.run("echo 'Analyzing Syntax ...'")
     c.run("flake8 lambda_packager tests setup.py tasks.py")
     c.run("pylint lambda_packager tests setup.py tasks.py")
     c.run("mypy lambda_packager tests setup.py tasks.py")
@@ -43,14 +52,6 @@ def test(c: Context) -> None:
     c.run("pytest")
 
 
-@task(aliases=["f"])
-def format_code(c: Context) -> None:
-    """Format code with black and isort."""
-    c.run("echo 'Formatting code ...'")
-    c.run("black .")
-    c.run("isort .")
-
-
 @task(aliases=["p"])
 def package(c: Context) -> None:
     """Package the CLI tool."""
@@ -58,9 +59,14 @@ def package(c: Context) -> None:
     c.run("python setup.py sdist bdist_wheel")
 
 
-@task(pre=[clean])
+@task()
 def run_all_tasks(c: Context) -> None:
     """Run all tasks."""
-    clean(c)
     lint(c)
     test(c)
+
+
+# Create a collection and set the default task
+ns = Collection(clean, install, lint, test, format_code, package, run_all_tasks)
+ns.configure({"run": {"echo": True}})
+ns.default = "run_all_tasks"

@@ -4,12 +4,7 @@ from click.testing import CliRunner
 from lambda_packager.cli import cli
 
 
-@pytest.fixture
-def runner() -> CliRunner:
-    return CliRunner()
-
-
-def test_package_function(runner, monkeypatch):
+def test_package_function(runner: CliRunner, monkeypatch: pytest.MonkeyPatch) -> None:
     # Mock os.path.exists to always return True
     monkeypatch.setattr("os.path.exists", lambda x: True)
 
@@ -31,7 +26,7 @@ def test_package_function(runner, monkeypatch):
     assert "Output directory: dist" in result.output
 
 
-def test_package_layer(runner):
+def test_package_layer(runner: CliRunner) -> None:
     result = runner.invoke(
         cli,
         [
