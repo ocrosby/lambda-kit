@@ -17,6 +17,7 @@ setup(
         # List your project dependencies here
         # e.g., 'boto3', 'click'
         "click"
+        "aws-lambda-typing"
     ],
     extras_require={
         "dev": [
