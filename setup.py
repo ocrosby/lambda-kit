@@ -18,7 +18,7 @@ setup(
         # e.g., 'boto3', 'click'
         "boto3",
         "click",
-        "aws-lambda-typing"
+        "aws-lambda-typing",
     ],
     extras_require={
         "dev": [
