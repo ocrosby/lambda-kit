@@ -22,11 +22,10 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Upgrade Pip
-      run: python -m pip install --upgrade pip
-
     - name: Install Development Dependencies
-      run: pip install ".[dev]"
+      run: |
+        chmod +x setup.sh
+        ./setup.sh
 
     - name: Analyze Syntax
       run: invoke lint
