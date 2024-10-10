@@ -1,17 +1,15 @@
 """
-This module contains the CLI tool for packaging Python Lambda functions.
+This module contains the CLI tool for packaging Python Lambda layers.
 """
 
 import click
 
-
 @click.group()
 def cli() -> None:
-    """CLI tool for packaging Python Lambda components."""
-
+    """CLI tool for packaging Python Lambda layers."""
 
 @cli.command("pack")
-@click.option("--function-name", required=True, help="Name of the Lambda function.")
+@click.option("--layer-name", required=True, help="Name of the Lambda layer.")
 @click.option(
     "--source-dir",
     required=True,
@@ -24,13 +22,12 @@ def cli() -> None:
     type=click.Path(),
     help="Path to the output directory.",
 )
-def package_function(function_name: str, source_dir: str, output_dir: str) -> None:
-    """Package Lambda functions."""
-    click.echo(f"Packaging Lambda function: {function_name}")
+def package_layer(layer_name: str, source_dir: str, output_dir: str) -> None:
+    """Package Lambda layers."""
+    click.echo(f"Packaging Lambda layer: {layer_name}")
     click.echo(f"Source directory: {source_dir}")
     click.echo(f"Output directory: {output_dir}")
     # Add your packaging logic here
-
 
 if __name__ == "__main__":
     cli()
