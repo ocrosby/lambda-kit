@@ -32,7 +32,11 @@ def install(c: Context, dev: bool = False) -> None:
 def format_code(c: Context) -> None:
     """Format code with black and isort."""
     c.run("echo 'Formatting code ...'")
+
+    # Format code
     c.run("black .")
+
+    # Sort imports
     c.run("isort .")
 
 
