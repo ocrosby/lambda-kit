@@ -24,8 +24,9 @@ jobs:
 
     - name: Install Development Dependencies
       run: |
-        chmod +x setup.sh
-        ./setup.sh
+        python3 -m pip install --upgrade pip
+        python3 -m pip install setuptools wheel build tox invoke
+        invoke install --dev
 
     - name: Analyze Syntax
       run: invoke lint
