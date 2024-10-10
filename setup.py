@@ -5,18 +5,19 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="lambda-packager",
-    version="0.1.0",
+    version="1.0.0",
     description="CLI tool for packaging and deploying Python Lambda functions.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Omar Crosby",
+    author_email="omar.crosby@gmail.com",
     url="https://github.com/yourusername/lambda-packager",
     packages=find_packages(),
     install_requires=[
         # List your project dependencies here
         # e.g., 'boto3', 'click'
-        "click"
+        "boto3",
+        "click",
         "aws-lambda-typing"
     ],
     extras_require={
