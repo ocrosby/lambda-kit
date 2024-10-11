@@ -27,6 +27,8 @@ def install(c: Context, dev: bool = False) -> None:
         c.run("echo 'Installing dependencies ...'")
         c.run("pip install .")
 
+    c.run("npm install")
+
 
 @task(aliases=["f"])
 def format_code(c: Context) -> None:
