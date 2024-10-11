@@ -1,0 +1,33 @@
+{
+  "name": "lambda-packager",
+  "version": "1.0.0",
+  "description": "A CLI tool for packaging AWS Lambda.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "invoke test",
+    "prepare": "husky || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocrosby/lambda-packager.git"
+  },
+  "keywords": [
+    "cli",
+    "aws",
+    "lambda"
+  ],
+  "author": "Omar Crosby <omar.crosby@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ocrosby/lambda-packager/issues"
+  },
+  "homepage": "https://github.com/ocrosby/lambda-packager#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^9.1.6"
+  }
+}
