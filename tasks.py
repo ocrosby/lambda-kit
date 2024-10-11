@@ -34,7 +34,7 @@ def format_code(c: Context) -> None:
     c.run("echo 'Formatting code ...'")
 
     # Format code
-    c.run("black .")
+    c.run("black . --exclude 'venv/*' --exclude '.venv/*'")
 
     # Sort imports
     c.run("isort .")
