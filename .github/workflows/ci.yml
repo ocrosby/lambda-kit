@@ -149,6 +149,8 @@ jobs:
         invoke install
 
     - name: Run Semantic Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: invoke semantic-release
 
     - name: Build Package
