@@ -1,5 +1,6 @@
 import re
 import sys
+from typing import Any, Optional
 
 from invoke import Collection, Context, task  # type: ignore[attr-defined]
 
@@ -114,7 +115,7 @@ def release(c: Context) -> None:
 
 
 @task(aliases=["cc"])
-def check_complexity(c: Context, max_complexity: int = 10):
+def check_complexity(c: Context, max_complexity: int = 10) -> None:
     """
     Check the cyclomatic complexity of the code.
     Fail if it exceeds the max_complexity.
@@ -125,6 +126,10 @@ def check_complexity(c: Context, max_complexity: int = 10):
     """
     c.run("echo 'Checking cyclomatic complexity ...'")
     result = c.run("radon cc lambda_kit tests -s", hide=True)
+
+    if result is None:
+        print("No output from radon.")
+        sys.exit(1)
 
     output = result.stdout
     results = parse_radon_output(output)
@@ -139,15 +144,17 @@ def check_complexity(c: Context, max_complexity: int = 10):
 
     sys.exit(0)
 
-def get_max_score(results):
+
+def get_max_score(results: dict[Optional[str], Any]) -> int:
     max_score = 0
-    for file, functions in results.items():
+    for _, functions in results.items():
         for function in functions:
-            if function['score'] > max_score:
-                max_score = function['score']
+            if function["score"] > max_score:
+                max_score = function["score"]
     return max_score
 
-def display_radon_results(results):
+
+def display_radon_results(results: dict[Optional[str], Any]) -> None:
     for file, functions in results.items():
         print(f"\nFile: {file}")
         for function in functions:
@@ -158,7 +165,7 @@ def display_radon_results(results):
             )
 
 
-def parse_radon_output(output: str):
+def parse_radon_output(output: str) -> dict[Optional[str], Any]:
     # Remove the escape sequence
     output = output.replace("\x1b[0m", "")
 
@@ -166,7 +173,7 @@ def parse_radon_output(output: str):
     pattern = re.compile(r"^\s*(\w)\s(\d+:\d+)\s([\w_]+)\s-\s([A-F])\s\((\d+)\)$")
 
     # Dictionary to store the results
-    results = {}
+    results: dict[Optional[str], Any] = {}
 
     # Split the output into lines
     output = output.strip()

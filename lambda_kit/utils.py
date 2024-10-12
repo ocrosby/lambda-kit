@@ -2,6 +2,7 @@
 
 import logging
 import os
+from typing import Callable
 
 
 def validate_directory(directory: str) -> None:
@@ -101,9 +102,9 @@ def create_local_lambda_function(
     directory: str,
     function_name: str,
     logger: logging.Logger,
-    create_file_func=create_file,
-    create_dir_func=create_directory,
-) -> str:
+    create_file_func: Callable[[str, str, logging.Logger], None] = create_file,
+    create_dir_func: Callable[[str, logging.Logger], None] = create_directory,
+) -> None:
     """
     Create a new AWS Lambda function locally.
 
