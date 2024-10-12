@@ -103,7 +103,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install setuptools wheel build tox invoke
-        invoke install --dev
+        invoke install
 
     - name: Run Unit Tests
       run: invoke test
@@ -133,7 +133,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install setuptools wheel build tox invoke
-        invoke install --dev
+        invoke install
 
     - name: Run Semantic Release
       run: invoke release
