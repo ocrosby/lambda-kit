@@ -2,6 +2,8 @@
 
 Yet another CLI tool for manipulating Python Lambda functions and layers.
 
+[![CI](https://github.com/ocrosby/lambda-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ocrosby/lambda-kit/actions/workflows/ci.yml)
+
 ## Overview
 
 Whenever I try to create new AWS Lambda functions in Python I always have difficulty packaging the code 
