@@ -24,9 +24,6 @@ def clean(c: Context) -> None:
     c.run("rm -rf build/")
     c.run("rm -rf *.egg-info")
 
-    # Remove the node_modules directory
-    c.run("rm -rf node_modules")
-
     # Clear the npm cache
     c.run("npm cache clean --force")
 
