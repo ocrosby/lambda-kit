@@ -68,3 +68,24 @@ exclude = ["data", "node_modules", "tests", "tests.*"]
 line-length = 88
 target-version = ['py36', 'py37', 'py38', 'py39', 'py310']
 include = '\.pyi?$'
+
+
+[tool.pylint.master]
+ignore = ["venv"]
+jobs = 1
+
+[tool.pylint.messages_control]
+disable = ["C0114", "C0115", "C0116"]
+
+[tool.pylint.reports]
+output_format = "colorized"
+
+[tool.pylint.format]
+max_line_length = 120
+
+[tool.pylint.design]
+max_args = 5
+max_locals = 15
+max_returns = 6
+max_branches = 12
+max_statements = 50
