@@ -145,7 +145,7 @@ jobs:
         invoke install
 
     - name: Run Semantic Release
-      run: invoke release
+      run: invoke semantic_release
 
     - name: Build Package
       run: invoke build
