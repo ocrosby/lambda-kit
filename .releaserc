@@ -1,5 +1,6 @@
 {
-  "version_variable": "your_module/__init__.py:__version__",
+  "repositoryUrl": "https://github.com/ocrosby/lambda-packager.git",
+  "version_variable": "pyproject.toml:version",
   "branch": "main",
   "upload_to_pypi": true,
   "plugins": [
@@ -7,6 +8,17 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    "@semantic-release/git"
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["pyproject.toml"]
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "sed -i 's/^version = \".*\"/version = \"${nextRelease.version}\"/' pyproject.toml"
+      }
+    ]
   ]
 }
