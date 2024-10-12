@@ -1,21 +1,70 @@
+# This file is used by the `pep517` build system. It is used to specify the
+# build system and dependencies required to build the project.
+
+# This section specifies the build system and dependencies required to build
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
+
+# This section specifies the metadata for the project.
+[project]
+name = "lambda_packager"
+version = "0.0.1"  # This will be updated by semantic-release
+description = "A tool to package Python code for AWS Lambda."
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = ["aws", "lambda", "packaging", "deployment"]
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "click",
+    "requests",
+    "aws-lambda-typing",
+]
+authors = [
+    {name = "Omar Crosby", email = "omar.crosby@gmail.com"},
+]
+urls = {homepage = "https://github.com/ocrosby/lambda-packager"}
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "mypy",
+    "isort",
+    "pylint",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-xdist",
+    "invoke",
+    "tox",
+]
+
+# This section is used to define simple command-line scripts.
+# It maps command name to a Python function.
+# It is a straightforward way to create command-line tools.
+[project.scripts]
+lpack = "lambda_packager.__main__:main"
+
+
+# This section defines how setuptools should find packages.
+[tool.setuptools.packages.find]
+include = ["lambda_packager", "lambda_packager.*"]
+exclude = ["data", "node_modules", "tests", "tests.*"]
+
+# This section specifies the configuration for the `black` code formatter.
 [tool.black]
 line-length = 88
 target-version = ['py36', 'py37', 'py38', 'py39', 'py310']
 include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''

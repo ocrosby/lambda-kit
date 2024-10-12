@@ -10,9 +10,43 @@ layers.
 
 ## Installation
 
-```bash
-pip install lambda-packager
+Setup a virtual environment:
+
+```shell
+python3 -m venv venv
 ```
+
+Source the virtual environment:
+
+```shell
+source venv/bin/activate
+```
+
+Upgrade pip:
+
+```shell
+pip install --upgrade pip
+```
+
+Install the package:
+
+```bash
+pip install .
+```
+
+Install the package in editable mode:
+
+```bash
+pip install -e .
+```
+
+
+
+
+
+Note: This assumes you have defined a pyproject.toml file with the necessary dependencies.
+
+
 
 ## Usage
 

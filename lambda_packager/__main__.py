@@ -10,8 +10,8 @@ def cli() -> None:
     """CLI tool for packaging Python Lambda components."""
 
 
-@cli.command("pack")
-@click.option("--function-name", required=True, help="Name of the Lambda function.")
+@cli.command("func")
+@click.option("-n", "--name", required=True, help="Name of the Lambda function.")
 @click.option(
     "--source-dir",
     required=True,
@@ -32,5 +32,14 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
     # Add your packaging logic here
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """
+    Entry point for the CLI tool.
+
+    :return:
+    """
     cli()
+
+
+if __name__ == "__main__":
+    main()
