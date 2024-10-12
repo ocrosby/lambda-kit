@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "invoke test",
+    "test": "invoke lint test",
     "prepare": "husky || true"
   },
   "repository": {
