@@ -1,6 +1,6 @@
 # Lambda Kit
 
-Yet another CLI tool for packaging Python Lambda functions and Lambda layers.
+Yet another CLI tool for manipulating Python Lambda functions and layers.
 
 ## Overview
 
