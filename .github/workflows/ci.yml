@@ -169,7 +169,7 @@ jobs:
       run: invoke build
 
     - name: Upload dist directory
-      if: env.release_needed == 'true'
+      if: steps.set_release_status.outputs.release_needed == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: dist
