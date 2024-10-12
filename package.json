@@ -8,7 +8,7 @@
   "scripts": {
     "test": "npm run lint && invoke lint test",
     "prepare": "husky || true",
-    "lint": "eslint commitlint.config.js eslint.config.mjs && jsonlint -q *.json"
+    "lint": "eslint update-version.js commitlint.config.js eslint.config.mjs && jsonlint -q *.json"
   },
   "repository": {
     "type": "git",
