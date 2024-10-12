@@ -165,7 +165,7 @@ jobs:
         fi
 
     - name: Build Package
-      if: env.release_needed == 'true'
+      if: steps.set_release_status.outputs.release_needed == 'true'
       run: invoke build
 
     - name: Upload dist directory
