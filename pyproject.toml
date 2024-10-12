@@ -101,3 +101,8 @@ check_untyped_defs = true
 warn_unused_ignores = true
 warn_return_any = true
 warn_unused_configs = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--strict-markers --tb=short --cov=lambda_kit --cov-report=term-missing --junitxml=junit.xml"
+testpaths = ["tests"]
