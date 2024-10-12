@@ -34,13 +34,13 @@ lambda-kit --help
 Packaging Lambda Functions
 
 ```bash
-lambda-kit package --function-name my-function --source-dir /path/to/source --output-dir /path/to/output
+kit function --function-name my-function --source-dir /path/to/source --output-dir /path/to/output
 ```
 
 Packaging Lambda Layers
 
 ```bash
-lambda-kit package --layer-name my-layer --source-dir /path/to/source --output-dir /path/to/output
+kit layer --layer-name my-layer --source-dir /path/to/source --output-dir /path/to/output
 ```
 
 ## References

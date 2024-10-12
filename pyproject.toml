@@ -55,7 +55,7 @@ dev = [
 # It maps command name to a Python function.
 # It is a straightforward way to create command-line tools.
 [project.scripts]
-lpack = "lambda_kit.__main__:main"
+kit = "lambda_kit.__main__:main"
 
 
 # This section defines how setuptools should find packages.

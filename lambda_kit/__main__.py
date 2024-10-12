@@ -11,10 +11,34 @@ from lambda_kit.utils import is_python_lambda, is_python_layer
 
 @click.group()
 def cli() -> None:
-    """CLI tool for packaging Python Lambda components."""
+    """CLI tool for manipulating Python Lambda components."""
 
 
-@cli.command("function")
+@cli.group()
+def function() -> None:
+    """Commands for manipulating Lambda functions."""
+
+
+@cli.group()
+def layer() -> None:
+    """Commands for manipulating Lambda layers."""
+
+
+@function.command("init")
+def initialize_function() -> None:
+    """Initialize a new Lambda function."""
+    click.echo("Initializing a new Lambda function.")
+    # Add your initialization logic here
+
+
+@function.command("describe")
+def describe_function() -> None:
+    """Describe a Lambda function."""
+    click.echo("Describing a Lambda function.")
+    # Add your description logic here
+
+
+@function.command("pack")
 @click.option("-n", "--name", required=True, help="Name of the Lambda function.")
 @click.option(
     "--source-dir",
@@ -42,7 +66,21 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
         sys.exit(1)
 
 
-@cli.command("layer")
+@layer.command("init")
+def initialize_layer() -> None:
+    """Initialize a new Lambda layer."""
+    click.echo("Initializing a new Lambda layer.")
+    # Add your initialization logic here
+
+
+@layer.command("describe")
+def describe_layer() -> None:
+    """Describe a Lambda layer."""
+    click.echo("Describing a Lambda layer.")
+    # Add your description logic here
+
+
+@layer.command("pack")
 @click.option("-n", "--name", required=True, help="Name of the Lambda layer.")
 @click.option(
     "--source-dir",
