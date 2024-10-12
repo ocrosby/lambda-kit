@@ -150,14 +150,26 @@ jobs:
         invoke install
 
     - name: Run Semantic Release
+      id: semantic_release
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: invoke semantic-release
 
+    - name: Set Release Status
+      id: set_release_status
+      run: |
+        if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
+          echo "release_needed=false" >> $GITHUB_ENV
+        else
+          echo "release_needed=true" >> $GITHUB_ENV
+        fi
+
     - name: Build Package
+      if: env.release_needed == 'true'
       run: invoke build
 
     - name: Upload dist directory
+      if: env.release_needed == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: dist
@@ -167,7 +179,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-    if: github.ref == 'refs/heads/main'  # Only run on the main branch
+    if: github.ref == 'refs/heads/main' && env.release_neaded == 'true'  # Only run on the main branch and if release is needed
 
     steps:
     - name: Download dist artifact
