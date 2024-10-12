@@ -1,6 +1,6 @@
-# Lambda Packager
+# Lambda Kit
 
-A CLI tool for packaging and deploying Python Lambda functions and Lambda layers.
+Yet another CLI tool for packaging Python Lambda functions and Lambda layers.
 
 ## Overview
 
@@ -10,70 +10,35 @@ layers.
 
 ## Installation
 
-Setup a virtual environment:
-
 ```shell
-python3 -m venv venv
+pip install lambda-kit
 ```
-
-Source the virtual environment:
-
-```shell
-source venv/bin/activate
-```
-
-Upgrade pip:
-
-```shell
-pip install --upgrade pip
-```
-
-Install the package:
-
-```bash
-pip install .
-```
-
-Install the package in editable mode:
-
-```bash
-pip install -e .
-```
-
-
-
-
-
-Note: This assumes you have defined a pyproject.toml file with the necessary dependencies.
-
-
 
 ## Usage
 
+Display the help menu:
+
 ```bash
-lambda-packager --help
+lambda-kit --help
 ```
 
 ## Features
 
 - Package Lambda functions
 - Package Lambda layers
-- Deploy Lambda functions
-- Deploy Lambda layers
-
 
 ## Usage
 
-### Packaging Lambda Functions
+Packaging Lambda Functions
 
 ```bash
-lambda-packager package --function-name my-function --source-dir /path/to/source --output-dir /path/to/output
+lambda-kit package --function-name my-function --source-dir /path/to/source --output-dir /path/to/output
 ```
 
-### Packaging Lambda Layers
+Packaging Lambda Layers
 
 ```bash
-lambda-packager package --layer-name my-layer --source-dir /path/to/source --output-dir /path/to/output
+lambda-kit package --layer-name my-layer --source-dir /path/to/source --output-dir /path/to/output
 ```
 
 ## References

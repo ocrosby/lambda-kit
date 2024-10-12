@@ -16,21 +16,62 @@ command line.
 
 ### Setup
 
-To get started, you need to install invoke.  You can do this using pip:
+To get started all you need to do is to run the setup.sh shell script.
 
 ```shell
-pip install invoke
+chmod +x setup.sh
+./setup.sh  
 ```
+
+This will:
+
+- ensure you have a new python3.13 based virtual environment named .venv
+- upgrade pip to the latest version
+- install the setuptools wheel build and invoke packages
+- run the invoke install task to install the package in editable mode along with development dependencies
+
+At this point all you should need to do to get started is to activate the virtual environment and run the invoke tasks.
+
+```shell
+source .venv/bin/activate
+invoke --list
+```
+
+This will list all the available tasks that you can run.
 
 ### Available Tasks
 
 Here are some of the common tasks defined in the tasks.py file:
 
-- **Clean**: Remove all build, test, coverage, and Python artifacts.
-- **Install**: Install the package in editable mode along with development dependencies.
-- **Lint**: Run flake8, pylint, and mypy to analyze the code.
-- **Test**: Run the test suite using pytest.
-- **Format**: Format the code using black and isort.
+#### **Clean**: Remove all build, test, coverage, and Python artifacts.
+
+```shell
+inv c
+```
+
+#### **Install**: Install the package in editable mode along with development dependencies.
+
+```shell
+inv i
+```
+
+#### **Lint**: Run flake8, pylint, and mypy to analyze the code.
+
+```shell
+inv l
+```
+
+#### **Test**: Run the test suite using pytest.
+
+```shell
+inv t
+```
+
+#### **Format**: Format the code using black and isort.
+
+```shell
+inv f
+```
 
 ### Running Tasks
 
