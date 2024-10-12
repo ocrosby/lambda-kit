@@ -106,3 +106,13 @@ warn_unused_configs = true
 minversion = "6.0"
 addopts = "--strict-markers --tb=short --cov=lambda_kit --cov-report=term-missing --junitxml=junit.xml"
 testpaths = ["tests"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_first_party = ["lambda_kit"]
+known_third_party = ["click", "pytest"]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
