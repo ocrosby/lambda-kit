@@ -48,6 +48,7 @@ dev = [
     "pytest-mock",
     "pytest-xdist",
     "invoke",
+    "radon",
     "tox",
 ]
 

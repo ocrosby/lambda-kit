@@ -1,3 +1,6 @@
+import re
+import sys
+
 from invoke import Collection, Context, task  # type: ignore[attr-defined]
 
 
@@ -10,6 +13,7 @@ def clean(c: Context) -> None:
     c.run("find lambda_kit tests -name '*.pyc' -type f -delete")
     c.run("find lambda_kit tests -name '.coverage' -type f -delete")
     c.run("find lambda_kit tests -name 'junit.xml' -type f -delete")
+    c.run("find lambda_kit tests -name '*.log' -type f -delete")
 
     # Remove build artifact directories
     c.run("find lambda_kit tests -name '*.egg-info' -type d -exec rm -r {} +")
@@ -17,6 +21,7 @@ def clean(c: Context) -> None:
     c.run("find lambda_kit tests -name '.pytest_cache' -type d -exec rm -r {} +")
     c.run("find lambda_kit tests -name '__pycache__' -type d -exec rm -r {} +")
 
+    c.run("rm -f *.log")
     c.run("rm -f junit.xml")
     c.run("rm -f .coverage")
     c.run("rm -rf .tox/")
@@ -108,6 +113,91 @@ def release(c: Context) -> None:
     c.run("twine upload dist/*")
 
 
+@task(aliases=["cc"])
+def check_complexity(c: Context, max_complexity: int = 10):
+    """
+    Check the cyclomatic complexity of the code.
+    Fail if it exceeds the max_complexity.
+
+    :param c: The context instance (automatically passed by invoke).
+    :param ctx: The context instance (automatically passed by invoke).
+    :param max_complexity: The maximum allowed cyclomatic complexity.
+    """
+    c.run("echo 'Checking cyclomatic complexity ...'")
+    result = c.run("radon cc lambda_kit tests -s", hide=True)
+
+    output = result.stdout
+    results = parse_radon_output(output)
+    display_radon_results(results)
+    max_score = get_max_score(results)
+
+    if max_score > max_complexity:
+        print(f"\nFAILED - Maximum complexity exceeded: {max_score}\n")
+        sys.exit(1)
+
+    print(f"\nMaximum complexity not exceeded: {max_score}\n")
+
+    sys.exit(0)
+
+def get_max_score(results):
+    max_score = 0
+    for file, functions in results.items():
+        for function in functions:
+            if function['score'] > max_score:
+                max_score = function['score']
+    return max_score
+
+def display_radon_results(results):
+    for file, functions in results.items():
+        print(f"\nFile: {file}")
+        for function in functions:
+            print(
+                f"\tFunction: {function['name']}, ",
+                f"Complexity: {function['complexity']}, ",
+                f"Score: {function['score']}",
+            )
+
+
+def parse_radon_output(output: str):
+    # Remove the escape sequence
+    output = output.replace("\x1b[0m", "")
+
+    # Regular expression to match the lines with complexity information
+    pattern = re.compile(r"^\s*(\w)\s(\d+:\d+)\s([\w_]+)\s-\s([A-F])\s\((\d+)\)$")
+
+    # Dictionary to store the results
+    results = {}
+
+    # Split the output into lines
+    output = output.strip()
+    lines = output.splitlines()
+
+    current_file = None
+    for line in lines:
+        try:
+            # Check if the line is a file name
+            if not line.startswith(" "):
+                current_file = line.strip()
+                results[current_file] = []
+            else:
+                # Match the line with the pattern
+                match = pattern.match(line)
+                if match:
+                    function_info = {
+                        "type": match.group(1),
+                        "location": match.group(2),
+                        "name": match.group(3),
+                        "complexity": match.group(4),
+                        "score": int(match.group(5)),
+                    }
+                    results[current_file].append(function_info)
+        except ValueError as e:
+            print(f"Error parsing line: '{line}'")
+            print(e)
+
+    return results
+
+
 # Create a collection and set the default task
 ns = Collection(
     clean,
@@ -119,6 +209,7 @@ ns = Collection(
     format_code,
     package,
     run_all_tasks,
+    check_complexity,
 )
 ns.configure({"run": {"echo": True}})
 ns.default = "run_all_tasks"
