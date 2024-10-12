@@ -1,5 +1,5 @@
 {
-  "repositoryUrl": "https://github.com/ocrosby/lambda-packager.git",
+  "repositoryUrl": "https://github.com/ocrosby/lambda-kit.git",
   "version_variable": "pyproject.toml:version",
   "branch": "main",
   "upload_to_pypi": true,

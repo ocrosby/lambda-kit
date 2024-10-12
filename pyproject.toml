@@ -12,7 +12,7 @@ local_scheme = "node-and-date"
 
 # This section specifies the metadata for the project.
 [project]
-name = "lambda_packager"
+name = "lambda_kit"
 version = "0.0.1"  # This will be updated by semantic-release
 description = "A tool to package Python code for AWS Lambda."
 readme = "README.md"
@@ -34,7 +34,7 @@ dependencies = [
 authors = [
     {name = "Omar Crosby", email = "omar.crosby@gmail.com"},
 ]
-urls = {homepage = "https://github.com/ocrosby/lambda-packager"}
+urls = {homepage = "https://github.com/ocrosby/lambda-kit"}
 
 [project.optional-dependencies]
 dev = [
@@ -55,12 +55,12 @@ dev = [
 # It maps command name to a Python function.
 # It is a straightforward way to create command-line tools.
 [project.scripts]
-lpack = "lambda_packager.__main__:main"
+lpack = "lambda_kit.__main__:main"
 
 
 # This section defines how setuptools should find packages.
 [tool.setuptools.packages.find]
-include = ["lambda_packager", "lambda_packager.*"]
+include = ["lambda_kit", "lambda_kit.*"]
 exclude = ["data", "node_modules", "tests", "tests.*"]
 
 # This section specifies the configuration for the `black` code formatter.
@@ -89,3 +89,15 @@ max_locals = 15
 max_returns = 6
 max_branches = 12
 max_statements = 50
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unused_configs = true

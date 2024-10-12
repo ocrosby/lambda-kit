@@ -1,5 +1,5 @@
 {
-  "name": "lambda-packager",
+  "name": "lambda-kit",
   "version": "1.0.0",
   "description": "A CLI tool for packaging AWS Lambda.",
   "directories": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ocrosby/lambda-packager.git"
+    "url": "git+https://github.com/ocrosby/lambda-kit.git"
   },
   "keywords": [
     "cli",
@@ -22,9 +22,9 @@
   "author": "Omar Crosby <omar.crosby@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ocrosby/lambda-packager/issues"
+    "url": "https://github.com/ocrosby/lambda-kit/issues"
   },
-  "homepage": "https://github.com/ocrosby/lambda-packager#readme",
+  "homepage": "https://github.com/ocrosby/lambda-kit#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",

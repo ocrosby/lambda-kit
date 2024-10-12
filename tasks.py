@@ -7,15 +7,15 @@ def clean(c: Context) -> None:
     c.run("echo 'Cleaning up build artifacts ...'")
 
     # Remove build artifact files
-    c.run("find lambda_packager tests -name '*.pyc' -type f -delete")
-    c.run("find lambda_packager tests -name '.coverage' -type f -delete")
-    c.run("find lambda_packager tests -name 'junit.xml' -type f -delete")
+    c.run("find lambda_kit tests -name '*.pyc' -type f -delete")
+    c.run("find lambda_kit tests -name '.coverage' -type f -delete")
+    c.run("find lambda_kit tests -name 'junit.xml' -type f -delete")
 
     # Remove build artifact directories
-    c.run("find lambda_packager tests -name '*.egg-info' -type d -exec rm -r {} +")
-    c.run("find lambda_packager tests -name '.mypy_cache' -type d -exec rm -r {} +")
-    c.run("find lambda_packager tests -name '.pytest_cache' -type d -exec rm -r {} +")
-    c.run("find lambda_packager tests -name '__pycache__' -type d -exec rm -r {} +")
+    c.run("find lambda_kit tests -name '*.egg-info' -type d -exec rm -r {} +")
+    c.run("find lambda_kit tests -name '.mypy_cache' -type d -exec rm -r {} +")
+    c.run("find lambda_kit tests -name '.pytest_cache' -type d -exec rm -r {} +")
+    c.run("find lambda_kit tests -name '__pycache__' -type d -exec rm -r {} +")
 
     c.run("rm -f junit.xml")
     c.run("rm -f .coverage")
@@ -52,19 +52,19 @@ def format_code(c: Context) -> None:
     c.run("echo 'Formatting code ...'")
 
     # Format code
-    c.run("black lambda_packager/ tests/ tasks.py")
+    c.run("black lambda_kit/ tests/ tasks.py")
 
     # Sort imports
-    c.run("isort lambda_packager/ tests/ tasks.py")
+    c.run("isort lambda_kit/ tests/ tasks.py")
 
 
 @task(aliases=["l"], pre=[format_code])
 def lint(c: Context) -> None:
     """Run linters (flake8 and pylint)."""
     c.run("echo 'Analyzing Syntax ...'")
-    c.run("flake8 lambda_packager/ tests/ tasks.py")
-    c.run("pylint lambda_packager/ tests/ tasks.py")
-    c.run("mypy lambda_packager/ tests/ tasks.py")
+    c.run("flake8 lambda_kit/ tests/ tasks.py")
+    c.run("pylint lambda_kit/ tests/ tasks.py")
+    c.run("mypy lambda_kit/ tests/ tasks.py")
 
 
 @task(aliases=["t"])
