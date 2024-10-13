@@ -6,7 +6,7 @@ import sys
 
 import click
 
-from lambda_kit.utils import is_python_lambda, is_python_layer
+from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 
 
 @click.group()

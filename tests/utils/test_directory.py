@@ -1,10 +1,13 @@
-# tests/test_utils.py
+"""
+This module contains tests for the directory utility functions.
+"""
+
 import os
 from typing import Any, Optional
 
 import pytest
 
-from lambda_kit.utils import validate_directory
+from lambda_kit.utils.directory import validate_directory
 
 
 @pytest.mark.parametrize(

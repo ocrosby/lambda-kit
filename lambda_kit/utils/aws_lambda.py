@@ -1,26 +1,15 @@
-# lambda_kit/utils.py
+"""
+This module contains utility functions for working with AWS Lambda functions.
+"""
+
+# aws_lambda.py
 
 import logging
 import os
 from typing import Callable
 
-
-def validate_directory(directory: str) -> None:
-    """
-    Validate the directory.
-
-    :param directory: The directory to validate.
-    :return: The validated directory.
-    :raises ValueError: If the directory is empty.
-    :raises NotADirectoryError: If the directory does not exist.
-    """
-
-    directory = directory.strip()
-    if directory == "":
-        raise ValueError("Directory cannot be empty.")
-
-    if not os.path.isdir(directory):
-        raise NotADirectoryError(f"{directory} is not a valid directory.")
+from lambda_kit.utils.directory import create_directory, validate_directory
+from lambda_kit.utils.file import create_file
 
 
 def is_python_lambda(directory: str) -> bool:
@@ -45,7 +34,6 @@ def is_python_lambda(directory: str) -> bool:
             return False
 
     print(f"{directory} appears to be a Python Lambda function.")
-
     return True
 
 
@@ -71,31 +59,7 @@ def is_python_layer(directory: str) -> bool:
             return False
 
     print(f"{directory} appears to be a Python Lambda layer.")
-
     return True
-
-
-def create_file(file_path: str, content: str, logger: logging.Logger) -> None:
-    """
-    Create a file with the given content.
-
-    :param file_path: The path to the file.
-    :param content: The content to write to the file.
-    """
-    with open(file_path, "w", encoding="utf8") as f:
-        f.write(content)
-    logger.info(f"Created file: {file_path}")
-
-
-def create_directory(directory: str, logger: logging.Logger) -> None:
-    """
-    Create a directory if it does not exist.
-
-    :param directory: The directory to create.
-    :param logger: The logger to use.
-    """
-    os.makedirs(directory, exist_ok=True)
-    logger.info(f"Created directory: {directory}")
 
 
 def create_local_lambda_function(
@@ -112,8 +76,7 @@ def create_local_lambda_function(
     :param function_name: The name of the Lambda function.
     :param logger: The logger to use.
     :param create_file_func: The function to create a file.
-    :param create_dir_func: The function to create a directory
-    :return: The path to the Lambda function directory.
+    :param create_dir_func: The function to create a directory.
     :raises ValueError: If the directory is empty.
     :raises NotADirectoryError: If the directory does not exist.
     """
@@ -149,7 +112,3 @@ def create_local_lambda_function(
     print(
         f"Lambda function '{function_name}' created successfully in '{function_dir}'."
     )
-
-
-# Example usage
-# create_local_lambda_function('/path/to/your/lambda/functions', 'my_lambda_function')
