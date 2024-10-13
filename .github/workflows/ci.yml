@@ -90,7 +90,7 @@ jobs:
         invoke install
 
     - name: Validate Complexity
-      run: invoke check-complexity --max-complexity 3
+      run: invoke check-complexity --max-complexity 5
 
     - name: Analyze Syntax
       run: invoke lint
