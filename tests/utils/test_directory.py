@@ -6,8 +6,9 @@ import os
 from typing import Any, Optional
 
 import pytest
+from pytest_mock import MockerFixture
 
-from lambda_kit.utils.directory import validate_directory
+from lambda_kit.utils.directory import create_directory, validate_directory
 
 
 @pytest.mark.parametrize(
@@ -34,3 +35,24 @@ def test_validate_directory(
             validate_directory(directory)
         except (ValueError, NotADirectoryError) as e:
             pytest.fail(f"validate_directory raised an exception: {e}")
+
+
+def test_create_directory(mocker: MockerFixture) -> None:
+    """
+    Test the create_directory function.
+
+    :param mocker: The pytest mocker fixture.
+    """
+    # Arrange
+    directory = "test_directory"
+    logger = mocker.Mock()
+
+    # Mock os.makedirs
+    mock_makedirs = mocker.patch("os.makedirs")
+
+    # Act
+    create_directory(directory, logger)
+
+    # Assert
+    mock_makedirs.assert_called_once_with(directory, exist_ok=True)
+    logger.info.assert_called_once_with(f"Created directory: {directory}")

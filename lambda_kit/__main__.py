@@ -7,6 +7,7 @@ import sys
 import click
 
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
+from lambda_kit.utils.logger import logger
 
 
 @click.group()
@@ -59,7 +60,7 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
     click.echo(f"Output directory: {output_dir}")
     # Add your packaging logic here
 
-    if is_python_lambda(source_dir):
+    if is_python_lambda(source_dir, logger):
         click.echo(f"Todo: Package Lambda function: {function_name}")
     else:
         click.echo(f"{source_dir} does not appear to be a Python Lambda function.")
@@ -101,7 +102,7 @@ def package_layer(layer_name: str, source_dir: str, output_dir: str) -> None:
     click.echo(f"Output directory: {output_dir}")
     # Add your packaging logic here
 
-    if is_python_layer(source_dir):
+    if is_python_layer(source_dir, logger):
         click.echo(f"Todo: Package Lambda layer: {layer_name}")
     else:
         click.echo(f"{source_dir} does not appear to be a Python Lambda layer.")

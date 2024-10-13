@@ -50,6 +50,7 @@ dev = [
     "invoke",
     "radon",
     "tox",
+    "coverage"
 ]
 
 # This section is used to define simple command-line scripts.
@@ -94,9 +95,20 @@ warn_return_any = true
 warn_unused_configs = true
 
 [tool.pytest.ini_options]
+# Enable/Disable pytest features or plugins
 minversion = "6.0"
-addopts = "--strict-markers --tb=short --cov=lambda_kit --cov-report=term-missing --junitxml=junit.xml"
+addopts = "--verbose --tb=short --cov=lambda_kit"  # Additional pytest options, e.g., verbosity, traceback style
 testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+branch = true  # Enable branch coverage
+source = ["lambda_kit"]  # Source code directories to measure coverage
+
+[tool.coverage.report]
+show_missing = true
 
 [tool.isort]
 profile = "black"

@@ -4,15 +4,58 @@ This module contains utility functions for working with AWS Lambda functions.
 
 # aws_lambda.py
 
+import ast
 import logging
 import os
-from typing import Callable
+from typing import Callable, Optional
 
 from lambda_kit.utils.directory import create_directory, validate_directory
 from lambda_kit.utils.file import create_file
 
 
-def is_python_lambda(directory: str) -> bool:
+def is_dict_annotation(annotation: Optional[ast.expr]) -> bool:
+    return isinstance(annotation, ast.Name) and annotation.id == "dict"
+
+
+def is_context_annotation(annotation: Optional[ast.expr]) -> bool:
+    return isinstance(annotation, ast.Attribute) and annotation.attr == "Context"
+
+
+def has_lambda_handler_signature(node: ast.FunctionDef) -> bool:
+    if len(node.args.args) != 2:
+        return False
+    param1, param2 = node.args.args
+    return is_dict_annotation(param1.annotation) and is_context_annotation(
+        param2.annotation
+    )
+
+
+def contains_lambda_handler_code(python_source_code: str) -> bool:
+    """
+    Determine if the given code contains a lambda handler function.
+
+    Parameters:
+    code (str): The Python code to check.
+
+    Returns:
+    bool: True if the code contains a lambda handler function, False otherwise.
+    """
+    try:
+        tree = ast.parse(python_source_code)
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.FunctionDef):
+                continue
+
+            if not has_lambda_handler_signature(node):
+                continue
+
+            return True
+        return False
+    except SyntaxError:
+        return False
+
+
+def is_python_lambda(directory: str, logger: logging.Logger) -> bool:
     """
     Determine if a given directory appears to be a Python Lambda function.
 
@@ -23,21 +66,23 @@ def is_python_lambda(directory: str) -> bool:
     """
     validate_directory(directory)
 
-    required_files = ["lambda_function.py", "requirements.txt"]
+    for file_name in os.listdir(directory):
+        file_path = os.path.join(directory, file_name)
+        if os.path.isfile(file_path) and file_name.endswith(".py"):
+            logger.info(f"Checking file: {file_path}")
+            with open(file_path, "r", encoding="utf-8") as file:
+                code = file.read()
+                if contains_lambda_handler_code(code):
+                    logger.info(f"Found lambda handler in file: {file_path}")
+                    return True
 
-    for file in required_files:
-        file_path = os.path.join(directory, file)
-        if os.path.isfile(file_path):
-            print(f"Found required file: {file_path}")
-        else:
-            print(f"Missing required file: {file_path}")
-            return False
-
-    print(f"{directory} appears to be a Python Lambda function.")
-    return True
+    logger.info(
+        f"No lambda handler found in any Python file at the root of {directory}."
+    )
+    return False
 
 
-def is_python_layer(directory: str) -> bool:
+def is_python_layer(directory: str, logger: logging.Logger) -> bool:
     """
     Determine if a given directory appears to be a Python Lambda layer.
 
@@ -53,12 +98,12 @@ def is_python_layer(directory: str) -> bool:
     for file in required_files:
         file_path = os.path.join(directory, file)
         if os.path.isdir(file_path):
-            print(f"Found required directory: {file_path}")
+            logger.info(f"Found required directory: {file_path}")
         else:
-            print(f"Missing required directory: {file_path}")
+            logger.info(f"Missing required directory: {file_path}")
             return False
 
-    print(f"{directory} appears to be a Python Lambda layer.")
+    logger.info(f"{directory} appears to be a Python Lambda layer.")
     return True
 
 
