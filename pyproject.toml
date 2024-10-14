@@ -29,6 +29,8 @@ classifiers = [
 dependencies = [
     "click",
     "requests",
+    "Jinja2",
+    "pydantic",
     "aws-lambda-typing",
 ]
 authors = [

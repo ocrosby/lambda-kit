@@ -2,9 +2,12 @@
 This module contains the CLI tool for packaging Python Lambda functions.
 """
 
+import os
 import sys
 
 import click
+
+from jinja2 import Environment, FileSystemLoader
 
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 from lambda_kit.utils.logger import logger
@@ -26,9 +29,38 @@ def layer() -> None:
 
 
 @function.command("init")
-def initialize_function() -> None:
+@click.option(
+    "--source-dir",
+    required=True,
+    type=click.Path(exists=True),
+    help="Path to the source directory.",
+)
+def initialize_function(source_dir: str) -> None:
     """Initialize a new Lambda function."""
+    LAMBDA_TEMPLATE_NAME = "lambda_function_template.jinja2"
+
+    if os.path.isdir(source_dir):
+        logger.error(f"The directory '{source_dir}' already exists.")
+        sys.exit(1)
+
+    # Set up the Jinja2 environment
+    template_dir = "templates"
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Load the template
+    template = env.get_template(LAMBDA_TEMPLATE_NAME)
+
+    context = {}
+
+    # Render the template with the provided context
+    rendered_content = template.render(context)
+
+    # Write the rendered content to the output file
+    with open(output_path, 'w', encoding='utf-8') as output_file:
+        output_file.write(rendered_content)
+
     click.echo("Initializing a new Lambda function.")
+    os.mkdirs(source_dir, exists_ok=True)
     # Add your initialization logic here
 
 

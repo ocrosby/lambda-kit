@@ -1,0 +1,10 @@
+# templates/lambda_function_template.jinja2
+
+def lambda_handler(event, context):
+    """
+    {{ description }}
+    """
+    return {
+        'statusCode': {{ status_code }},
+        'body': '{{ body_message }}'
+    }
