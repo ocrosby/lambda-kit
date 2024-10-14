@@ -74,6 +74,7 @@ include = '\.pyi?$'
 
 [tool.pylint]
 output-format = "text"
+disable = ["consider-using-fstring"]
 
 [tool.pylint.master]
 ignore = ["venv", ".venv", ".tox", "node_modules", "data"]

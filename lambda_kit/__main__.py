@@ -39,6 +39,25 @@ def describe_function() -> None:
     # Add your description logic here
 
 
+@function.command("verify")
+@click.argument("function_dir", type=click.Path(exists=True))
+def verify_function(function_dir: str) -> None:
+    """Verify a Lambda function directory."""
+    logger.info("Verifying a Lambda function.")
+    # Add your verification logic here
+    answer = is_python_lambda(function_dir, logger)
+    if answer:
+        logger.info(
+            "The directory '%s' appears to be a Python Lambda function." % function_dir
+        )
+    else:
+        logger.info(
+            "The directory '%s' does not appear to be a Python Lambda function."
+            % function_dir
+        )
+        sys.exit(1)
+
+
 @function.command("pack")
 @click.option("-n", "--name", required=True, help="Name of the Lambda function.")
 @click.option(
