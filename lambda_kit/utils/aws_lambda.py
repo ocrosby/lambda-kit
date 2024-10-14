@@ -2,7 +2,7 @@
 This module contains utility functions for working with AWS Lambda functions.
 """
 
-# aws_lambda.py
+# function.py
 
 import ast
 import logging

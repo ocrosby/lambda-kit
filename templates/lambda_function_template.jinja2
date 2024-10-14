@@ -1,6 +1,11 @@
 # templates/lambda_function_template.jinja2
 
-def lambda_handler(event, context):
+from typing import Any
+
+from aws_lambda_typing import context as lambda_context
+
+
+def lambda_handler(event: dict, context: lambda_context.Context) -> dict[str, Any]:
     """
     {{ description }}
     """

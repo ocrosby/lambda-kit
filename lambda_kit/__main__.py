@@ -4,9 +4,9 @@ This module contains the CLI tool for packaging Python Lambda functions.
 
 import os
 import sys
+from typing import Any
 
 import click
-
 from jinja2 import Environment, FileSystemLoader
 
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
@@ -29,18 +29,13 @@ def layer() -> None:
 
 
 @function.command("init")
-@click.option(
-    "--source-dir",
-    required=True,
-    type=click.Path(exists=True),
-    help="Path to the source directory.",
-)
+@click.argument("source-dir")
 def initialize_function(source_dir: str) -> None:
     """Initialize a new Lambda function."""
-    LAMBDA_TEMPLATE_NAME = "lambda_function_template.jinja2"
+    lambda_template_name = "lambda_function_template.jinja2"
 
     if os.path.isdir(source_dir):
-        logger.error(f"The directory '{source_dir}' already exists.")
+        logger.error("The directory '%s' already exists.", source_dir)
         sys.exit(1)
 
     # Set up the Jinja2 environment
@@ -48,20 +43,27 @@ def initialize_function(source_dir: str) -> None:
     env = Environment(loader=FileSystemLoader(template_dir))
 
     # Load the template
-    template = env.get_template(LAMBDA_TEMPLATE_NAME)
+    template = env.get_template(lambda_template_name)
 
-    context = {}
+    context: dict[str, Any] = {
+        "description": "A new Lambda function",
+        "status_code": 200,
+        "body_message": "Hello, World!",
+    }
 
     # Render the template with the provided context
     rendered_content = template.render(context)
 
     # Write the rendered content to the output file
-    with open(output_path, 'w', encoding='utf-8') as output_file:
+    click.echo("Initializing a new Lambda function.")
+    os.makedirs(source_dir)
+
+    output_path = os.path.join(source_dir, "handler.py")
+    with open(output_path, "w", encoding="utf-8") as output_file:
         output_file.write(rendered_content)
 
-    click.echo("Initializing a new Lambda function.")
-    os.mkdirs(source_dir, exists_ok=True)
     # Add your initialization logic here
+    click.echo(f"Lambda function initialized in {source_dir}.")
 
 
 @function.command("describe")
