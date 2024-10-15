@@ -4,11 +4,12 @@ This module contains the CLI tool for packaging Python Lambda functions.
 
 import os
 import sys
-from typing import Any
 
 import click
-from jinja2 import Environment, FileSystemLoader
 
+from lambda_kit.mvc.controllers import FunctionController, LayerController
+from lambda_kit.mvc.models import FunctionModel, LayerModel
+from lambda_kit.mvc.views import FunctionView, LayerView
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 from lambda_kit.utils.logger import logger
 
@@ -31,39 +32,24 @@ def layer() -> None:
 @function.command("init")
 @click.argument("source-dir")
 def initialize_function(source_dir: str) -> None:
-    """Initialize a new Lambda function."""
-    lambda_template_name = "lambda_function_template.jinja2"
+    """
+    Initialize a new Lambda function.
 
-    if os.path.isdir(source_dir):
-        logger.error("The directory '%s' already exists.", source_dir)
+    :param source_dir: The path to the source directory.
+    :return: None
+    """
+    # retrieve the name from the source_dir
+    function_name = os.path.basename(os.path.normpath(source_dir))
+
+    function_model = FunctionModel(function_name=function_name, source_dir=source_dir)
+    function_view = FunctionView(info=click.echo)
+    function_controller = FunctionController(model=function_model, view=function_view)
+
+    try:
+        function_controller.initialize(source_dir)
+    except FileExistsError as err:
+        click.echo(err)
         sys.exit(1)
-
-    # Set up the Jinja2 environment
-    template_dir = "templates"
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Load the template
-    template = env.get_template(lambda_template_name)
-
-    context: dict[str, Any] = {
-        "description": "A new Lambda function",
-        "status_code": 200,
-        "body_message": "Hello, World!",
-    }
-
-    # Render the template with the provided context
-    rendered_content = template.render(context)
-
-    # Write the rendered content to the output file
-    click.echo("Initializing a new Lambda function.")
-    os.makedirs(source_dir)
-
-    output_path = os.path.join(source_dir, "handler.py")
-    with open(output_path, "w", encoding="utf-8") as output_file:
-        output_file.write(rendered_content)
-
-    # Add your initialization logic here
-    click.echo(f"Lambda function initialized in {source_dir}.")
 
 
 @function.command("describe")
@@ -102,10 +88,22 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
 
 
 @layer.command("init")
-def initialize_layer() -> None:
+@click.argument("source-dir")
+def initialize_layer(source_dir: str) -> None:
     """Initialize a new Lambda layer."""
-    click.echo("Initializing a new Lambda layer.")
-    # Add your initialization logic here
+
+    # retrieve the name from the source_dir
+    layer_name = os.path.basename(os.path.normpath(source_dir))
+
+    layer_model = LayerModel(layer_name=layer_name, source_dir=source_dir)
+    layer_view = LayerView(info=click.echo)
+    layer_controller = LayerController(model=layer_model, view=layer_view)
+
+    try:
+        layer_controller.initialize()
+    except FileExistsError as err:
+        click.echo(err)
+        sys.exit(1)
 
 
 @layer.command("describe")

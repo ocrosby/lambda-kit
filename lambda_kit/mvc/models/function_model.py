@@ -1,11 +1,11 @@
 """
-This module contains the data models for AWS Lambda components.
+This module contains the data models for AWS Lambda functions.
 """
 
 from pydantic import BaseModel, Field
 
 
-class Function(BaseModel):
+class FunctionModel(BaseModel):
     """
     Represents an AWS Lambda function
     """
