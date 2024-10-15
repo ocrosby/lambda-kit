@@ -14,7 +14,7 @@ class LayerView(BaseView):
         """
         Render the output of the LayerController class.
         """
-        self.info_display_func(message)
+        self.render_message(message, is_error=False)
 
     def error(self, message: str) -> None:
         """

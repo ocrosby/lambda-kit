@@ -107,6 +107,7 @@ source = ["lambda_kit"]  # Source code directories to measure coverage
 
 [tool.coverage.report]
 show_missing = true
+fail_under = 43  # Fail if coverage is below 44%
 
 [tool.isort]
 profile = "black"

@@ -32,7 +32,7 @@ class BaseView(ABC):
         """
         Render a message.
         """
-        if is_error:
-            self.error(message)
+        if is_error and self.error_display_func is not None:
+            self.error_display_func(message)
         else:
-            self.info(message)
+            self.info_display_func(message)

@@ -14,7 +14,7 @@ class FunctionView(BaseView):
         """
         Render the output of the FunctionController class.
         """
-        self.info_display_func(message)
+        self.render_message(message, False)
 
     def error(self, message: str) -> None:
         """
@@ -22,4 +22,4 @@ class FunctionView(BaseView):
 
         :param message: The message to display.
         """
-        self.render_message(message, is_error=True)
+        self.render_message(message, True)
