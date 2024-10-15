@@ -38,14 +38,16 @@ def initialize_function(source_dir: str) -> None:
     :param source_dir: The path to the source directory.
     :return: None
     """
-    # retrieve the name from the source_dir
-    function_name = os.path.basename(os.path.normpath(source_dir))
-
-    function_model = FunctionModel(function_name=function_name, source_dir=source_dir)
-    function_view = FunctionView(info=click.echo)
-    function_controller = FunctionController(model=function_model, view=function_view)
-
     try:
+        function_model = FunctionModel(
+            function_name=os.path.basename(os.path.normpath(source_dir)),
+            source_dir=source_dir,
+        )
+        function_view = FunctionView(info=click.echo)
+        function_controller = FunctionController(
+            model=function_model, view=function_view
+        )
+
         function_controller.initialize(source_dir)
     except FileExistsError as err:
         click.echo(err)
@@ -91,15 +93,14 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
 @click.argument("source-dir")
 def initialize_layer(source_dir: str) -> None:
     """Initialize a new Lambda layer."""
-
-    # retrieve the name from the source_dir
-    layer_name = os.path.basename(os.path.normpath(source_dir))
-
-    layer_model = LayerModel(layer_name=layer_name, source_dir=source_dir)
-    layer_view = LayerView(info=click.echo)
-    layer_controller = LayerController(model=layer_model, view=layer_view)
-
     try:
+        layer_model = LayerModel(
+            layer_name=os.path.basename(os.path.normpath(source_dir)),
+            source_dir=source_dir,
+        )
+        layer_view = LayerView(info=click.echo)
+        layer_controller = LayerController(model=layer_model, view=layer_view)
+
         layer_controller.initialize()
     except FileExistsError as err:
         click.echo(err)
