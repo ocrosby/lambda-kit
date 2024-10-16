@@ -4,15 +4,12 @@ This module contains the CLI tool for packaging Python Lambda functions.
 
 import os
 import sys
-from typing import Any
 
 import click
-from jinja2 import Environment, FileSystemLoader
 
 from lambda_kit.mvc.controllers import FunctionController, LayerController
 from lambda_kit.mvc.models import FunctionModel, LayerModel
 from lambda_kit.mvc.views import FunctionView, LayerView
-from lambda_kit.utils.file import touch_file, create_file
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 from lambda_kit.utils.logger import logger
 
