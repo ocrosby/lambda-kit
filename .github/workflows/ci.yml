@@ -128,6 +128,8 @@ jobs:
       run: invoke coverage
 
     - name: Submit Coverage Report
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: coveralls
 
   build:
