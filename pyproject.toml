@@ -48,7 +48,8 @@ dev = [
     "invoke",
     "radon",
     "tox",
-    "coverage"
+    "coverage",
+    "coveralls",
 ]
 
 # This section is used to define simple command-line scripts.

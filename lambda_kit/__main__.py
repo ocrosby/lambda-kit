@@ -10,6 +10,7 @@ import click
 from lambda_kit.mvc.controllers import FunctionController, LayerController
 from lambda_kit.mvc.models import FunctionModel, LayerModel
 from lambda_kit.mvc.views import FunctionView, LayerView
+from lambda_kit.utils.file import touch_file, create_file
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 from lambda_kit.utils.logger import logger
 
@@ -105,6 +106,29 @@ def initialize_layer(source_dir: str) -> None:
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
+    click.echo("Initializing a new Lambda layer.")
+
+    # Create the target directory.
+    os.makedirs(source_dir)
+
+    # Step #1. Create an empty __init__.py file
+    touch_file(os.path.join(source_dir, "__init__.py"), logger)
+
+    # Step #2. Create a virtual environment directory using python -m venv command with a target directory
+    venv_dir = os.path.join(source_dir, "python")
+
+    if os.path.isdir(venv_dir):
+        logger.error("The directory '%s' already exists.", venv_dir)
+        sys.exit(1)
+
+    os.makedirs(venv_dir)
+
+    # Step #3. Create a requirements.txt file
+    requirements_content = """# Add your dependencies here\n"""
+    requirements_file = os.path.join(source_dir, "requirements.txt")
+    create_file(requirements_file, requirements_content, logger)
+
+    click.echo(f"Lambda layer initialized in {source_dir}.")
 
 
 @layer.command("describe")

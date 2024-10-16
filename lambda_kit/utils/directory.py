@@ -7,6 +7,16 @@ This module contains utility functions for working with directories.
 import logging
 import os
 
+def touch_directory(directory: str, logger: logging.Logger) -> None:
+    """
+    Create an empty directory.
+
+    :param directory: The path to the directory.
+    :param logger: The logger to use.
+    """
+    os.makedirs(directory, exist_ok=True)
+    logger.info(f"Created directory: {directory}")
+
 
 def validate_directory(directory: str) -> None:
     """
@@ -33,3 +43,20 @@ def create_directory(directory: str, logger: logging.Logger) -> None:
     """
     os.makedirs(directory, exist_ok=True)
     logger.info(f"Created directory: {directory}")
+
+
+def create_virtual_environment(directory: str, logger: logging.Logger) -> None:
+    """
+    Create a virtual environment in the given directory.
+
+    :param directory: The directory to create the virtual environment in.
+    :param logger: The logger to use.
+    """
+    venv_dir = os.path.join(directory, "python")
+
+    if os.path.isdir(venv_dir):
+        logger.error("The directory '%s' already exists.", venv_dir)
+        return
+
+    os.makedirs(venv_dir)
+    logger.info(f"Created virtual environment: {venv_dir}")
