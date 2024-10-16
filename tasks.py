@@ -22,13 +22,8 @@ def clean(c: Context) -> None:
     c.run("find lambda_kit tests -name '.pytest_cache' -type d -exec rm -r {} +")
     c.run("find lambda_kit tests -name '__pycache__' -type d -exec rm -r {} +")
 
-    c.run("rm -f *.log")
-    c.run("rm -f junit.xml")
-    c.run("rm -f .coverage")
-    c.run("rm -rf .tox/")
-    c.run("rm -rf dist/")
-    c.run("rm -rf build/")
-    c.run("rm -rf *.egg-info")
+    c.run("rm -f *.log junit.xml .coverage")
+    c.run("rm -rf .tox/ dist/ build/ *.egg-info")
 
     # Clear the npm cache
     c.run("npm cache clean --force")

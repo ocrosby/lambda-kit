@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 # This section specifies the metadata for the project.
 [project]
-name = "lambda_kit"
+name = "lambda-kit"
 version = "0.0.1"  # This will be updated by semantic-release
 description = "A tool to package Python code for AWS Lambda."
 readme = "README.md"
