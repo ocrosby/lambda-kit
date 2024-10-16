@@ -7,6 +7,7 @@ This module contains utility functions for working with directories.
 import logging
 import os
 
+
 def touch_directory(directory: str, logger: logging.Logger) -> None:
     """
     Create an empty directory.
