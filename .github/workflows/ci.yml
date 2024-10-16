@@ -125,7 +125,10 @@ jobs:
         invoke install
 
     - name: Run Unit Tests
-      run: invoke test
+      run: invoke coverage
+
+    - name: Submit Coverage Report
+      run: coveralls
 
   build:
     runs-on: ubuntu-latest
