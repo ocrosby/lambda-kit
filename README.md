@@ -49,3 +49,4 @@ kit layer --layer-name my-layer --source-dir /path/to/source --output-dir /path/
 - [AWS Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
 - [AWS Lambda Deployment Package](https://docs.aws.amazon.com/lambda/latest/dg/python-package.html)
 - [AWS Lambda Layers Deployment Package](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
+- [Setuptools Miscellaneous](https://setuptools.pypa.io/en/latest/userguide/miscellaneous.html)
