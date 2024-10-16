@@ -22,7 +22,7 @@ def clean(c: Context) -> None:
     c.run("find lambda_kit tests -name '.pytest_cache' -type d -exec rm -r {} +")
     c.run("find lambda_kit tests -name '__pycache__' -type d -exec rm -r {} +")
 
-    c.run("rm -f *.log junit.xml .coverage")
+    c.run("rm -f *.log junit.xml .coverage coverage.xml")
     c.run("rm -rf .tox/ dist/ build/ *.egg-info")
 
     # Clear the npm cache
@@ -70,6 +70,15 @@ def test(c: Context) -> None:
     """Run tests."""
     c.run("echo 'Running tests ...'")
     c.run("pytest")
+
+
+@task(aliases=["v"])
+def coverage(c: Context) -> None:
+    """Run tests with coverage."""
+    c.run("echo 'Running tests with coverage ...'")
+    c.run("pytest --cov=lambda_kit --cov-report=term-missing tests/")
+    c.run("coverage report")
+    c.run("coverage xml")
 
 
 @task(aliases=["p"])
@@ -207,6 +216,7 @@ ns = Collection(
     lint,
     test,
     build,
+    coverage,
     semantic_release,
     format_code,
     package,
