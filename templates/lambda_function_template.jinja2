@@ -1,15 +1,28 @@
 # templates/lambda_function_template.jinja2
-
-from typing import Any
+import json
 
 from aws_lambda_typing import context as lambda_context
 
 
-def lambda_handler(event: dict, context: lambda_context.Context) -> dict[str, Any]:
+def lambda_handler(event: dict, context: lambda_context.Context) -> dict[str, any]:
     """
     {{ description }}
+
+    :param event: The event data.
+    :param context: The context object.
     """
-    return {
+    # Log the received event
+    print("Received event:", json.dumps(event, indent=2))
+    print("Received context:", vars(context))
+
+    # Create the response object
+    response = {
         'statusCode': {{ status_code }},
         'body': '{{ body_message }}'
     }
+
+    # Log the response
+    print("Response:", json.dumps(response, indent=2))
+
+    return response
+
