@@ -6,17 +6,13 @@
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-version_scheme = "guess-next-dev"
-local_scheme = "node-and-date"
-
 # This section specifies the metadata for the project.
 [project]
-name = "lambda_kit"
+name = "lambda-kit"
 version = "0.0.1"  # This will be updated by semantic-release
 description = "A tool to package Python code for AWS Lambda."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.9"
 keywords = ["aws", "lambda", "packaging", "deployment"]
 license = {file = "LICENSE"}
 classifiers = [
@@ -29,6 +25,8 @@ classifiers = [
 dependencies = [
     "click",
     "requests",
+    "Jinja2",
+    "pydantic",
     "aws-lambda-typing",
 ]
 authors = [
@@ -50,7 +48,8 @@ dev = [
     "invoke",
     "radon",
     "tox",
-    "coverage"
+    "coverage",
+    "coveralls",
 ]
 
 # This section is used to define simple command-line scripts.
@@ -109,6 +108,7 @@ source = ["lambda_kit"]  # Source code directories to measure coverage
 
 [tool.coverage.report]
 show_missing = true
+fail_under = 43  # Fail if coverage is below 44%
 
 [tool.isort]
 profile = "black"

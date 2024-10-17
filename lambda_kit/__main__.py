@@ -2,10 +2,14 @@
 This module contains the CLI tool for packaging Python Lambda functions.
 """
 
+import os
 import sys
 
 import click
 
+from lambda_kit.mvc.controllers import FunctionController, LayerController
+from lambda_kit.mvc.models import FunctionModel, LayerModel
+from lambda_kit.mvc.views import FunctionView, LayerView
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 from lambda_kit.utils.logger import logger
 
@@ -26,10 +30,28 @@ def layer() -> None:
 
 
 @function.command("init")
-def initialize_function() -> None:
-    """Initialize a new Lambda function."""
-    click.echo("Initializing a new Lambda function.")
-    # Add your initialization logic here
+@click.argument("source-dir")
+def initialize_function(source_dir: str) -> None:
+    """
+    Initialize a new Lambda function.
+
+    :param source_dir: The path to the source directory.
+    :return: None
+    """
+    try:
+        function_model = FunctionModel(
+            function_name=os.path.basename(os.path.normpath(source_dir)),
+            source_dir=source_dir,
+        )
+        function_view = FunctionView(info=click.echo)
+        function_controller = FunctionController(
+            model=function_model, view=function_view
+        )
+
+        function_controller.initialize(source_dir)
+    except FileExistsError as err:
+        click.echo(err)
+        sys.exit(1)
 
 
 @function.command("describe")
@@ -68,10 +90,21 @@ def package_function(function_name: str, source_dir: str, output_dir: str) -> No
 
 
 @layer.command("init")
-def initialize_layer() -> None:
+@click.argument("source-dir")
+def initialize_layer(source_dir: str) -> None:
     """Initialize a new Lambda layer."""
-    click.echo("Initializing a new Lambda layer.")
-    # Add your initialization logic here
+    try:
+        layer_model = LayerModel(
+            layer_name=os.path.basename(os.path.normpath(source_dir)),
+            source_dir=source_dir,
+        )
+        layer_view = LayerView(info=click.echo)
+        layer_controller = LayerController(model=layer_model, view=layer_view)
+
+        layer_controller.initialize()
+    except FileExistsError as err:
+        click.echo(err)
+        sys.exit(1)
 
 
 @layer.command("describe")

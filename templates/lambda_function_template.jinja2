@@ -1,0 +1,15 @@
+# templates/lambda_function_template.jinja2
+
+from typing import Any
+
+from aws_lambda_typing import context as lambda_context
+
+
+def lambda_handler(event: dict, context: lambda_context.Context) -> dict[str, Any]:
+    """
+    {{ description }}
+    """
+    return {
+        'statusCode': {{ status_code }},
+        'body': '{{ body_message }}'
+    }

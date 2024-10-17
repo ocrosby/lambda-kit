@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - '*'
+      - 'feature/*'
   pull_request:
     branches:
       - '*'
+
   workflow_dispatch:
 
 env:
@@ -123,7 +125,10 @@ jobs:
         invoke install
 
     - name: Run Unit Tests
-      run: invoke test
+      run: invoke coverage
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
 
   build:
     runs-on: ubuntu-latest
