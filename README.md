@@ -3,7 +3,7 @@
 Yet another CLI tool for manipulating Python Lambda functions and layers.
 
 [![CI](https://github.com/ocrosby/lambda-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ocrosby/lambda-kit/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/ocrosby/lambda-kit/badge.svg)](https://coveralls.io/github/ocrosby/lambda-kit)
+[![Coverage Status](https://coveralls.io/repos/github/ocrosby/lambda-kit/badge.svg?branch=main)](https://coveralls.io/github/ocrosby/lambda-kit?branch=main)
 
 
 ## Overview
