@@ -62,7 +62,7 @@ jobs:
           DEBUG: semantic-release:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          invoke semantic-release
+          npx semantic-release || echo "semantic-release failed with exit code $?"
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
             echo "release_needed=false" >> $GITHUB_ENV
           else
