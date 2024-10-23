@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  packages: write
+  actions: write
+
+env:
+  NODE_VERSION: '21.1.0'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.13
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history and tags
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Dependencies
+        run: |
+          npm install --no-fund
+          python3 -m pip install --upgrade pip
+          python3 -m pip install setuptools wheel build twine invoke
+          invoke install
+
+      - name: Run Semantic Release
+        id: semantic_release
+        env:
+          DEBUG: semantic-release:*
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          invoke semantic-release
+          if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
+            echo "release_needed=false" >> $GITHUB_ENV
+          else
+            echo "release_needed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Conditionally Build and Publish to PyPI
+        if: steps.semantic_release.outcome == 'success' && env.release_needed == 'true'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+            python3 -m pip install --upgrade pip
+            python3 -m pip install twine invoke
+            invoke build
+            echo "Deploying to PyPI..."
+            python3 -m twine upload --repository pypi dist/*
