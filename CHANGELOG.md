@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/ocrosby/lambda-kit/compare/v1.0.6...v1.0.7) (2024-10-24)
+
+
+### Bug Fixes
+
+* update commit paths for version changes ([5f0e99b](https://github.com/ocrosby/lambda-kit/commit/5f0e99ba9c70e5ce96e2eebc013175b8df1e092c))
+
 ## [1.0.6](https://github.com/ocrosby/lambda-kit/compare/v1.0.5...v1.0.6) (2024-10-24)
 
 
