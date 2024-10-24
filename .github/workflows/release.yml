@@ -28,6 +28,9 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history and tags
 
+      - name: Configure Git Safe Directory
+        run: git config --global --add safe.directory ${{ github.workspace }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
