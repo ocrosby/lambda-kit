@@ -80,6 +80,9 @@ jobs:
         run: |
           cd /__w/lambda-kit/lambda-kit
           npx semantic-release || echo "semantic-release failed with exit code $?"
+
+      - name: Check if a release is needed
+        run: |
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
             echo "release_needed=false" >> $GITHUB_ENV
           else
