@@ -58,11 +58,11 @@ jobs:
 
       - name: Run Semantic Release
         id: semantic_release
-        working-directory: ${{ github.workspace }}
         env:
           DEBUG: semantic-release:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          cd ${{ github.workspace }}
           git config --global --add safe.directory ${{ github.workspace }}
           npx semantic-release || echo "semantic-release failed with exit code $?"
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
