@@ -28,29 +28,26 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history and tags
 
-      - name: Configure Git Safe Directory
-        run: git config --global --add safe.directory ${{ github.workspace }}
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+#      - name: Cache Node.js modules
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.npm
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#
+#      - name: Cache pip
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.cache/pip
+#          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-pip-
 
       - name: Install Dependencies
         run: |
@@ -66,6 +63,7 @@ jobs:
           DEBUG: semantic-release:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          git config --global --add safe.directory ${{ github.workspace }}
           npx semantic-release || echo "semantic-release failed with exit code $?"
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
             echo "release_needed=false" >> $GITHUB_ENV
