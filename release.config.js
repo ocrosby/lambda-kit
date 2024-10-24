@@ -40,6 +40,6 @@ module.exports = {
     { type: "test", release: false }
   ],
   changelogFile: "CHANGELOG.md",
-  commitPaths: ["README.md", "CHANGELOG.md"],
+  commitPaths: ["README.md", "CHANGELOG.md", "VERSION", "pyproject.toml"],
   commitMessage: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
 };
