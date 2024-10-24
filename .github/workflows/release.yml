@@ -56,6 +56,10 @@ jobs:
           python3 -m pip install setuptools wheel build twine invoke
           invoke install
 
+      - name: Set Git Safe Directory
+        run: |
+          git config --global --add safe.directory ${{ github.workspace }}
+
       - name: Debug Git Configuration
         run: |
           pwd
@@ -70,7 +74,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           cd ${{ github.workspace }}
-          git config --global --add safe.directory ${{ github.workspace }}
           npx semantic-release || echo "semantic-release failed with exit code $?"
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
             echo "release_needed=false" >> $GITHUB_ENV
