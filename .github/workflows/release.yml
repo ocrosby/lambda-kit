@@ -81,18 +81,12 @@ jobs:
           cd /__w/lambda-kit/lambda-kit
           npx semantic-release || echo "semantic-release failed with exit code $?"
 
-#      This isn't working, I'm getting the following error message:
-#      Syntax error: redirection unexpected
       - name: Check if a release is needed
         run: |
-          if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
-            echo "release_needed=false" >> $GITHUB_ENV
-          else
-            echo "release_needed=true" >> $GITHUB_ENV
-          fi
+          echo "version_changed=${{ steps.semantic_release.outputs.version_changed }}"
 
       - name: Conditionally Build and Publish to PyPI
-        if: steps.semantic_release.outcome == 'success' && env.release_needed == 'true'
+        if: steps.semantic_release.outcome == 'success' && env.version_changed == 'true'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
