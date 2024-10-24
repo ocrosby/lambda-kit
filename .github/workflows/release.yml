@@ -8,10 +8,7 @@ on:
 
 permissions:
   contents: write
-  issues: write
-  pull-requests: write
   packages: write
-  actions: write
 
 env:
   NODE_VERSION: '21.1.0'
@@ -59,6 +56,10 @@ jobs:
       - name: Set Git Safe Directory
         run: |
           git config --global --add safe.directory ${{ github.workspace }}
+
+      - name: Adjust Repository Ownership
+        run: |
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}
 
       - name: Debug Git Configuration
         run: |
