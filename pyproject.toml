@@ -28,6 +28,7 @@ dependencies = [
     "Jinja2",
     "pydantic",
     "aws-lambda-typing",
+    "toml"
 ]
 authors = [
     {name = "Omar Crosby", email = "omar.crosby@gmail.com"},

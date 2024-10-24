@@ -50,18 +50,18 @@ def format_code(c: Context) -> None:
     c.run("echo 'Formatting code ...'")
 
     # Format code
-    c.run("black lambda_kit/ tests/ tasks.py")
+    c.run("black lambda_kit/ tests/ tasks.py update_version.py")
 
     # Sort imports
-    c.run("isort lambda_kit/ tests/ tasks.py")
+    c.run("isort lambda_kit/ tests/ tasks.py update_version.py")
 
 
 @task(aliases=["l"], pre=[format_code])
 def lint(c: Context) -> None:
     """Run linters (flake8 and pylint)."""
     c.run("echo 'Analyzing Syntax ...'")
-    c.run("flake8 lambda_kit/ tests/ tasks.py")
-    c.run("pylint lambda_kit/ tests/ tasks.py")
+    c.run("flake8 lambda_kit/ tests/ tasks.py update_version.py")
+    c.run("pylint lambda_kit/ tests/ tasks.py update_version.py")
     c.run("mypy lambda_kit/ tests/ tasks.py")
 
 
@@ -129,7 +129,7 @@ def check_complexity(c: Context, max_complexity: int = 10) -> None:
     :param max_complexity: The maximum allowed cyclomatic complexity.
     """
     c.run("echo 'Checking cyclomatic complexity ...'")
-    result = c.run("radon cc lambda_kit tests -s", hide=True)
+    result = c.run("radon cc lambda_kit tests tasks.py update_version.py -s", hide=True)
 
     if result is None:
         print("No output from radon.")
