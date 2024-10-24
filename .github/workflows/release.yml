@@ -81,6 +81,8 @@ jobs:
           cd /__w/lambda-kit/lambda-kit
           npx semantic-release || echo "semantic-release failed with exit code $?"
 
+#      This isn't working, I'm getting the following error message:
+#      Syntax error: redirection unexpected
       - name: Check if a release is needed
         run: |
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
