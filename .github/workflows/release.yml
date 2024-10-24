@@ -78,7 +78,7 @@ jobs:
           DEBUG: semantic-release:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          cd ${{ github.workspace }}
+          cd /__w/lambda-kit/lambda-kit
           npx semantic-release || echo "semantic-release failed with exit code $?"
           if grep -q "no relevant changes" <<< "${{ steps.semantic_release.outputs.stdout }}"; then
             echo "release_needed=false" >> $GITHUB_ENV
