@@ -58,6 +58,7 @@ jobs:
 
       - name: Run Semantic Release
         id: semantic_release
+        working-directory: ${{ github.workspace }}
         env:
           DEBUG: semantic-release:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
