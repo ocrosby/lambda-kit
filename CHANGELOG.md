@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/ocrosby/lambda-kit/compare/v1.0.7...v1.0.8) (2024-10-25)
+
+
+### Bug Fixes
+
+* validate check in of assets ([cbe09bd](https://github.com/ocrosby/lambda-kit/commit/cbe09bd80e2f782cb0150c50c90db82e902f3fb1))
+
 ## [1.0.7](https://github.com/ocrosby/lambda-kit/compare/v1.0.6...v1.0.7) (2024-10-24)
 
 
