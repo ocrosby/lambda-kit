@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/ocrosby/lambda-kit/compare/v1.0.10...v1.0.11) (2024-10-25)
+
+
+### Bug Fixes
+
+* add git status for semantic release ([10b4e9e](https://github.com/ocrosby/lambda-kit/commit/10b4e9ecf01a3b02e4112306507792e367d133df))
+
 ## [1.0.10](https://github.com/ocrosby/lambda-kit/compare/v1.0.9...v1.0.10) (2024-10-25)
 
 
