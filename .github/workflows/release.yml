@@ -82,6 +82,7 @@ jobs:
           npx semantic-release || echo "semantic-release failed with exit code $?"
           pwd
           ls -la
+          git status
 
       - name: Check if a release is needed
         run: |
