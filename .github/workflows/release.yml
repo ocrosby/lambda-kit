@@ -90,7 +90,7 @@ jobs:
           echo "outcome=${{ steps.semantic_release.outcome }}"
 
       - name: Conditionally Build and Publish to PyPI
-        if: steps.semantic_release.outcome == 'success' && env.version_changed == 'true'
+        if: steps.semantic_release.outcome == 'success' && steps.semantic_release.outputs.version_changed == 'true'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
