@@ -15,7 +15,17 @@ module.exports = {
         ]
       }
     ],
-    "@semantic-release/git",
+    [
+      "@semantic-release/git",
+      {
+        assets: [
+          "CHANGELOG.md",
+          "VERSION",
+          "pyproject.toml"
+        ],
+        message: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
     [
       "@semantic-release/exec",
       {
@@ -40,6 +50,5 @@ module.exports = {
     { type: "test", release: false }
   ],
   changelogFile: "CHANGELOG.md",
-  commitPaths: ["README.md", "CHANGELOG.md", "VERSION", "pyproject.toml"],
   commitMessage: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
 };
