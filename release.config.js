@@ -16,6 +16,14 @@ module.exports = {
       }
     ],
     [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "python3 update_version.py ${nextRelease.version}",
+        successCmd: "echo 'Successfully released ${nextRelease.version}'",
+        publishCmd: "echo 'version_changed=true' >> $GITHUB_OUTPUT"
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         assets: [
@@ -26,14 +34,6 @@ module.exports = {
         message: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ],
-    [
-      "@semantic-release/exec",
-      {
-        prepareCmd: "python3 update_version.py ${nextRelease.version}",
-        successCmd: "echo 'Successfully released ${nextRelease.version}'",
-        publishCmd: "echo 'version_changed=true' >> $GITHUB_OUTPUT"
-      }
-    ]
   ],
   tagFormat: "v${version}",
   preset: "angular",
