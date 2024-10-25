@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/ocrosby/lambda-kit/compare/v1.0.12...v1.0.13) (2024-10-25)
+
+
+### Bug Fixes
+
+* refactor ordering of semantic release actions ([7549a96](https://github.com/ocrosby/lambda-kit/commit/7549a96675ab70f5d7c61ac22e9f7198d2c1c0ec))
+
 ## [1.0.12](https://github.com/ocrosby/lambda-kit/compare/v1.0.11...v1.0.12) (2024-10-25)
 
 
