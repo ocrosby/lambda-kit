@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/ocrosby/lambda-kit/compare/v1.0.8...v1.0.9) (2024-10-25)
+
+
+### Bug Fixes
+
+* trigger release ([0c8ff43](https://github.com/ocrosby/lambda-kit/commit/0c8ff4394c2aa281edfd60d8c649ab04c19faee6))
+
 ## [1.0.8](https://github.com/ocrosby/lambda-kit/compare/v1.0.7...v1.0.8) (2024-10-25)
 
 
