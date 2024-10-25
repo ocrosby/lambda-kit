@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/ocrosby/lambda-kit/compare/v1.0.11...v1.0.12) (2024-10-25)
+
+
+### Bug Fixes
+
+* add empty VERSION file ([869fdaf](https://github.com/ocrosby/lambda-kit/commit/869fdaf03fd66355be6403de53b17b31492bd585))
+
 ## [1.0.11](https://github.com/ocrosby/lambda-kit/compare/v1.0.10...v1.0.11) (2024-10-25)
 
 
