@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/ocrosby/lambda-kit/compare/v1.0.9...v1.0.10) (2024-10-25)
+
+
+### Bug Fixes
+
+* add directory listing ([e0ded9b](https://github.com/ocrosby/lambda-kit/commit/e0ded9b5d0576aa0ad7e6651e69a13d17f7c9327))
+
 ## [1.0.9](https://github.com/ocrosby/lambda-kit/compare/v1.0.8...v1.0.9) (2024-10-25)
 
 
