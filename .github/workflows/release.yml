@@ -84,6 +84,7 @@ jobs:
       - name: Check if a release is needed
         run: |
           echo "version_changed=${{ steps.semantic_release.outputs.version_changed }}"
+          echo "outcome=${{ steps.semantic_release.outcome }}"
 
       - name: Conditionally Build and Publish to PyPI
         if: steps.semantic_release.outcome == 'success' && env.version_changed == 'true'
