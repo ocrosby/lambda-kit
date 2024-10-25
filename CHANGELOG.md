@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/ocrosby/lambda-kit/compare/v1.0.13...v1.0.14) (2024-10-25)
+
+
+### Bug Fixes
+
+* correct condition for version changed ([c8ea4f9](https://github.com/ocrosby/lambda-kit/commit/c8ea4f9739364654a5572567743f02f34d86c3c4))
+
 ## [1.0.13](https://github.com/ocrosby/lambda-kit/compare/v1.0.12...v1.0.13) (2024-10-25)
 
 
