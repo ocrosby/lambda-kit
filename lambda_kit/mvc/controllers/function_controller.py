@@ -3,7 +3,7 @@ This module contains the FunctionController class.
 """
 
 import os
-from typing import Any
+from typing import Any, Callable
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -68,3 +68,21 @@ class FunctionController:
         """
         Package a Lambda function.
         """
+
+
+def create_function_mvc(source_dir: str, info: Callable) -> tuple[FunctionModel, FunctionView, FunctionController]:
+    """
+    Create a model, view, and controller for a Lambda layer.
+
+    :param source_dir: The path to the source directory.
+    :param info: The info function for displaying messages.
+    :return: A tuple containing the model, view, and controller.
+    """
+    function_model = FunctionModel(
+        layer_name=os.path.basename(os.path.normpath(source_dir)),
+        source_dir=source_dir,
+    )
+    function_view = FunctionView(info=info)
+    function_controller = FunctionController(model=function_model, view=function_view)
+
+    return function_model, function_view, function_controller
