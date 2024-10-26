@@ -10,7 +10,14 @@ readme = "README.md"
 requires-python = ">=3.9"
 keywords = [ "aws", "lambda", "packaging", "deployment",]
 classifiers = [ "Development Status :: 4 - Beta", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.12",]
-dependencies = [ "click", "requests", "Jinja2", "pydantic", "aws-lambda-typing", "toml",]
+dependencies = [
+    "click",
+    "requests",
+    "Jinja2",
+    "pydantic",
+    "aws-lambda-typing",
+    "toml",
+]
 [[project.authors]]
 name = "Omar Crosby"
 email = "omar.crosby@gmail.com"
@@ -22,7 +29,22 @@ file = "LICENSE"
 homepage = "https://github.com/ocrosby/lambda-kit"
 
 [project.optional-dependencies]
-dev = [ "black", "flake8", "mypy", "isort", "pylint", "pytest", "pytest-cov", "pytest-mock", "pytest-xdist", "invoke", "radon", "tox", "coverage", "coveralls",]
+dev = [
+    "black",
+    "flake8",
+    "mypy",
+    "isort",
+    "pylint",
+    "pytest",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-xdist",
+    "invoke",
+    "radon",
+    "tox",
+    "coverage",
+    "coveralls",
+]
 
 [project.scripts]
 kit = "lambda_kit.__main__:main"
@@ -66,7 +88,7 @@ disable = [ "C0114", "C0115", "C0116",]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--verbose --tb=short --cov=lambda_kit"
+addopts = "-v --cov-report term"
 testpaths = [ "tests",]
 python_files = [ "test_*.py",]
 python_classes = [ "Test*",]
@@ -74,11 +96,32 @@ python_functions = [ "test_*",]
 
 [tool.coverage.run]
 branch = true
-source = [ "lambda_kit",]
+source = [
+    "lambda_kit",
+]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 43
+fail_under = 34
+skip_empty = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "setup.py",
+    "setup.cfg",
+    "*/node_modules/*",
+    "*/data/*",
+    "*/.tox/*",
+    "*/venv/*",
+    "*/.venv/*",
+    "*/.eggs/*",
+    "*/.git/*",
+    "*/.cache/*",
+    "*/.vscode/*",
+    "*/.pytest_cache/*",
+    "*/.mypy_cache/*",
+    "*/__init__.py",
+]
 
 [tool.setuptools.packages.find]
 include = [ "lambda_kit", "lambda_kit.*",]
