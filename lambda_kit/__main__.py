@@ -2,12 +2,13 @@
 This module contains the CLI tool for packaging Python Lambda functions.
 """
 
+import os
 import sys
 
 import click
 
-from lambda_kit.mvc.controllers.function_controller import create_function_mvc
-from lambda_kit.mvc.controllers.layer_controller import create_layer_mvc
+from lambda_kit.mvc.controllers.function_controller import FunctionController
+from lambda_kit.mvc.controllers.layer_controller import LayerController
 
 
 @click.group()
@@ -36,7 +37,14 @@ def layer() -> None:
 def initialize_function(source_dir: str, output_dir: str) -> None:
     """Initialize a new Lambda function."""
     try:
-        create_function_mvc(source_dir, output_dir, click.echo).initialize()
+        controller = FunctionController.create()
+        model = controller.model
+
+        model.name = os.path.basename(os.path.normpath(source_dir))
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.initialize()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
@@ -53,7 +61,13 @@ def initialize_function(source_dir: str, output_dir: str) -> None:
 def describe_function(source_dir: str, output_dir: str) -> None:
     """Describe a Lambda function."""
     try:
-        create_function_mvc(source_dir, output_dir, click.echo).describe()
+        controller = FunctionController.create()
+        model = controller.model
+
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.describe()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
@@ -75,7 +89,13 @@ def describe_function(source_dir: str, output_dir: str) -> None:
 def package_function(source_dir: str, output_dir: str) -> None:
     """Package Lambda functions."""
     try:
-        create_function_mvc(source_dir, output_dir, click.echo).package()
+        controller = FunctionController.create()
+        model = controller.model
+
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.package()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
@@ -92,7 +112,14 @@ def package_function(source_dir: str, output_dir: str) -> None:
 def initialize_layer(source_dir: str, output_dir: str) -> None:
     """Initialize a new Lambda layer."""
     try:
-        create_layer_mvc(source_dir, output_dir, click.echo).initialize()
+        controller = LayerController.create()
+        model = controller.model
+
+        model.name = os.path.basename(os.path.normpath(source_dir))
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.initialize()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
@@ -109,7 +136,13 @@ def initialize_layer(source_dir: str, output_dir: str) -> None:
 def describe_layer(source_dir: str, output_dir: str) -> None:
     """Describe a Lambda layer."""
     try:
-        create_layer_mvc(source_dir, output_dir, click.echo).describe()
+        controller = LayerController.create()
+        model = controller.model
+
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.describe()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
@@ -131,7 +164,13 @@ def describe_layer(source_dir: str, output_dir: str) -> None:
 def package_layer(source_dir: str, output_dir: str) -> None:
     """Package Lambda layers."""
     try:
-        create_layer_mvc(source_dir, output_dir, click.echo).package()
+        controller = LayerController.create()
+        model = controller.model
+
+        model.source_dir = source_dir
+        model.output_dir = output_dir
+
+        controller.package()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
