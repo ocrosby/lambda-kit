@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Callable
 
 
 class BaseView(ABC):
@@ -7,8 +8,8 @@ class BaseView(ABC):
     """
 
     def __init__(self) -> None:
-        self.info_display_func = print
-        self.error_display_func = print
+        self.info_display_func: Callable[[str], None] = print
+        self.error_display_func: Callable[[str], None] = print
 
     @abstractmethod
     def info(self, message: str) -> None:
