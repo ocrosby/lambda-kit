@@ -10,5 +10,6 @@ class LayerModel(BaseModel):
     Represents an AWS Lambda layer
     """
 
-    name: str = Field(..., alias="layer_name")
+    name: str = Field(..., alias="name")
     source_dir: str = Field(..., alias="source_dir")
+    output_dir: str = Field(..., alias="output_dir")

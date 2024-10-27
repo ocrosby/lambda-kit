@@ -25,7 +25,7 @@ homepage = "https://github.com/ocrosby/lambda-kit"
 dev = [ "black", "flake8", "mypy", "isort", "pylint", "pytest", "pytest-cov", "pytest-mock", "pytest-xdist", "invoke", "radon", "tox", "coverage", "coveralls",]
 
 [project.scripts]
-kit = "lambda_kit.__main__:main"
+kit = "lambda_kit.__main__:cli"
 
 [tool.black]
 line-length = 88

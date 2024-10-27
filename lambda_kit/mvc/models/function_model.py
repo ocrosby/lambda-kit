@@ -10,5 +10,6 @@ class FunctionModel(BaseModel):
     Represents an AWS Lambda function
     """
 
-    name: str = Field(..., alias="function_name")
+    name: str = Field(..., alias="name")
     source_dir: str = Field(..., alias="source_dir")
+    output_dir: str = Field(..., alias="output_dir")

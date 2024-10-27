@@ -41,7 +41,7 @@ def install(c: Context, prod: bool = False) -> None:
 
     # Install the dependencies
     c.run("echo 'Installing npm dependencies ...'")
-    c.run("npm install")
+    c.run("npm install --no-fund")
 
 
 @task(aliases=["f"])
