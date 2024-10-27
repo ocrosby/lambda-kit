@@ -5,12 +5,10 @@ This module contains utility functions for working with AWS Lambda functions.
 # function_model.py
 
 import ast
-import logging
 import os
 from typing import Callable, Optional
 
-from lambda_kit.utils.directory import create_directory, validate_directory
-from lambda_kit.utils.file import create_file
+from lambda_kit.utils.directory import validate_directory
 
 
 def is_dict_annotation(annotation: Optional[ast.expr]) -> bool:
@@ -55,7 +53,7 @@ def contains_lambda_handler_code(python_source_code: str) -> bool:
         return False
 
 
-def is_python_lambda(directory: str, info: Callable) -> bool:
+def is_python_lambda(directory: str, info: Callable[[str], None]) -> bool:
     """
     Determine if a given directory appears to be a Python Lambda function.
 
@@ -80,7 +78,7 @@ def is_python_lambda(directory: str, info: Callable) -> bool:
     return False
 
 
-def is_python_layer(directory: str, info: Callable) -> bool:
+def is_python_layer(directory: str, info: Callable[[str], None]) -> bool:
     """
     Determine if a given directory appears to be a Python Lambda layer.
 
@@ -105,53 +103,3 @@ def is_python_layer(directory: str, info: Callable) -> bool:
     info(f"{directory} appears to be a Python Lambda layer.")
 
     return True
-
-
-def create_local_lambda_function(
-    directory: str,
-    function_name: str,
-    info: Callable,
-    create_file_func: Callable[[str, str, Callable], None] = create_file,
-    create_dir_func: Callable[[str, Callable], None] = create_directory,
-) -> None:
-    """
-    Create a new AWS Lambda function locally.
-
-    :param directory: The directory where the Lambda function will be created.
-    :param function_name: The name of the Lambda function.
-    :param logger: The logger to use.
-    :param create_file_func: The function to create a file.
-    :param create_dir_func: The function to create a directory.
-    :raises ValueError: If the directory is empty.
-    :raises NotADirectoryError: If the directory does not exist.
-    """
-    # Validate the directory
-    validate_directory(directory)
-
-    create_dir_func(directory, info)
-
-    # Create the Lambda function directory
-    function_dir = os.path.join(directory, function_name)
-    create_dir_func(function_dir, info)
-
-    # Create a sample lambda_function.py file
-    lambda_function_content = """def lambda_handler(event, context):
-    return {
-        'statusCode': 200,
-        'body': 'Hello from Lambda!'
-    }
-"""
-    create_file_func(
-        os.path.join(function_dir, "lambda_function.py"),
-        lambda_function_content,
-        info,
-    )
-
-    # Create a sample requirements.txt file
-    requirements_content = """# Add your dependencies here
-"""
-    create_file_func(
-        os.path.join(function_dir, "requirements.txt"), requirements_content, info
-    )
-
-    info(f"Lambda function '{function_name}' created successfully in '{function_dir}'.")
