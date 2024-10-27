@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Callable, Optional
 
 
 class BaseView(ABC):
@@ -7,14 +6,9 @@ class BaseView(ABC):
     Abstract base class for views.
     """
 
-    def __init__(
-        self, info: Callable[[str], None], error: Optional[Callable[[str], None]] = None
-    ):
-        """
-        Initialize a new BaseView object.
-        """
-        self.info_display_func = info
-        self.error_display_func = error
+    def __init__(self) -> None:
+        self.info_display_func = print
+        self.error_display_func = print
 
     @abstractmethod
     def info(self, message: str) -> None:

@@ -4,7 +4,6 @@ This module contains the LayerController class.
 
 import os
 import sys
-from typing import Callable
 
 from lambda_kit.mvc.models import LayerModel
 from lambda_kit.mvc.views import LayerView
@@ -78,6 +77,9 @@ class LayerController:
         self.view.info(f"Output directory: {self.model.output_dir}")
         # Add your packaging logic here
 
+        if self.model.source_dir is None:
+            raise ValueError("Source directory not set.")
+
         if is_python_layer(self.model.source_dir, self.view.info):
             self.view.info(f"Todo: Package Lambda layer: {self.model.name}")
         else:
@@ -86,24 +88,13 @@ class LayerController:
             )
             sys.exit(1)
 
+    @staticmethod
+    def create() -> "LayerController":
+        """
+        Create a new LayerController.
+        """
+        model = LayerModel()
+        view = LayerView()
+        controller = LayerController(model=model, view=view)
 
-def create_layer_mvc(
-    source_dir: str, output_dir: str, info: Callable[[str], None]
-) -> LayerController:
-    """
-    Create a model, view, and controller for a Lambda layer.
-
-    :param source_dir: The path to the source directory.
-    :param output_dir: The path to the output directory.
-    :param info: The info function for displaying messages.
-    :return: A tuple containing the model, view, and controller.
-    """
-    layer_model = LayerModel(
-        name=os.path.basename(os.path.normpath(source_dir)),
-        source_dir=source_dir,
-        output_dir=output_dir,
-    )
-    layer_view = LayerView(info=info)
-    layer_controller = LayerController(model=layer_model, view=layer_view)
-
-    return layer_controller
+        return controller
