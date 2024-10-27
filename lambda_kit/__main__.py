@@ -6,6 +6,7 @@ import os
 import sys
 
 import click
+from click import BaseCommand, Command
 
 from lambda_kit.mvc.controllers import FunctionController, LayerController
 from lambda_kit.mvc.models import FunctionModel, LayerModel
@@ -15,23 +16,23 @@ from lambda_kit.utils.logger import logger
 
 
 @click.group()
-def cli() -> None:
+def cli():
     """CLI tool for manipulating Python Lambda components."""
 
 
 @cli.group()
-def function() -> None:
+def function():
     """Commands for manipulating Lambda functions."""
 
 
 @cli.group()
-def layer() -> None:
+def layer():
     """Commands for manipulating Lambda layers."""
 
 
 @function.command("init")
 @click.argument("source-dir")
-def initialize_function(source_dir: str) -> None:
+def initialize_function(source_dir: str):
     """
     Initialize a new Lambda function.
 
@@ -55,7 +56,7 @@ def initialize_function(source_dir: str) -> None:
 
 
 @function.command("describe")
-def describe_function() -> None:
+def describe_function() -> Command:
     """Describe a Lambda function."""
     click.echo("Describing a Lambda function.")
     # Add your description logic here

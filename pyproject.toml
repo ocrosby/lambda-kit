@@ -99,29 +99,19 @@ branch = true
 source = [
     "lambda_kit",
 ]
+omit = [
+    "tests/*",
+    "*/test_*.py",
+    "data/*",
+    "setup.cfg",
+    "tasks.py",
+    "update_version.py"
+]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 34
+fail_under = 77
 skip_empty = true
-omit = [
-    "*/tests/*",
-    "*/test_*.py",
-    "setup.py",
-    "setup.cfg",
-    "*/node_modules/*",
-    "*/data/*",
-    "*/.tox/*",
-    "*/venv/*",
-    "*/.venv/*",
-    "*/.eggs/*",
-    "*/.git/*",
-    "*/.cache/*",
-    "*/.vscode/*",
-    "*/.pytest_cache/*",
-    "*/.mypy_cache/*",
-    "*/__init__.py",
-]
 
 [tool.setuptools.packages.find]
 include = [ "lambda_kit", "lambda_kit.*",]
