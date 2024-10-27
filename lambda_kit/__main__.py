@@ -26,6 +26,10 @@ def layer() -> None:
     """Commands for manipulating Lambda layers."""
 
 
+def echo_wrapper(message: str) -> None:
+    """Wrapper for click.echo."""
+    click.echo(message)
+
 @function.command("init")
 @click.argument("source-dir")
 @click.option(
@@ -39,6 +43,10 @@ def initialize_function(source_dir: str, output_dir: str) -> None:
     try:
         controller = FunctionController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.name = os.path.basename(os.path.normpath(source_dir))
         model.source_dir = source_dir
@@ -63,6 +71,10 @@ def describe_function(source_dir: str, output_dir: str) -> None:
     try:
         controller = FunctionController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.source_dir = source_dir
         model.output_dir = output_dir
@@ -91,6 +103,10 @@ def package_function(source_dir: str, output_dir: str) -> None:
     try:
         controller = FunctionController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.source_dir = source_dir
         model.output_dir = output_dir
@@ -114,6 +130,10 @@ def initialize_layer(source_dir: str, output_dir: str) -> None:
     try:
         controller = LayerController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.name = os.path.basename(os.path.normpath(source_dir))
         model.source_dir = source_dir
@@ -138,6 +158,10 @@ def describe_layer(source_dir: str, output_dir: str) -> None:
     try:
         controller = LayerController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.source_dir = source_dir
         model.output_dir = output_dir
@@ -166,6 +190,10 @@ def package_layer(source_dir: str, output_dir: str) -> None:
     try:
         controller = LayerController.create()
         model = controller.model
+        view = controller.view
+
+        view.info_display_func = echo_wrapper
+        view.error_display_func = echo_wrapper
 
         model.source_dir = source_dir
         model.output_dir = output_dir
