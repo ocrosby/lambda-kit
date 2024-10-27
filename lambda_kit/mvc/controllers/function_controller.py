@@ -70,7 +70,9 @@ class FunctionController:
         """
 
 
-def create_function_mvc(source_dir: str, info: Callable) -> tuple[FunctionModel, FunctionView, FunctionController]:
+def create_function_mvc(
+    source_dir: str, info: Callable
+) -> tuple[FunctionModel, FunctionView, FunctionController]:
     """
     Create a model, view, and controller for a Lambda layer.
 

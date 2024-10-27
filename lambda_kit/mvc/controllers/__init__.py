@@ -5,5 +5,5 @@ __all__ = [
     "FunctionController",
     "LayerController",
     "create_function_mvc",
-    "create_layer_mvc"
+    "create_layer_mvc",
 ]

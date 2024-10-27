@@ -8,8 +8,14 @@ from curses.ascii import controlnames
 
 import click
 
-from lambda_kit.mvc.controllers.layer_controller import LayerController, create_layer_mvc
-from lambda_kit.mvc.controllers.function_controller import FunctionController, create_function_mvc
+from lambda_kit.mvc.controllers.function_controller import (
+    FunctionController,
+    create_function_mvc,
+)
+from lambda_kit.mvc.controllers.layer_controller import (
+    LayerController,
+    create_layer_mvc,
+)
 from lambda_kit.mvc.models import FunctionModel, LayerModel
 from lambda_kit.mvc.views import FunctionView, LayerView
 from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer

@@ -76,9 +76,7 @@ def is_python_lambda(directory: str, info: Callable) -> bool:
                     info(f"Found lambda handler in file: {file_path}")
                     return True
 
-    info(
-        f"No lambda handler found in any Python file at the root of {directory}."
-    )
+    info(f"No lambda handler found in any Python file at the root of {directory}.")
     return False
 
 
@@ -156,6 +154,4 @@ def create_local_lambda_function(
         os.path.join(function_dir, "requirements.txt"), requirements_content, info
     )
 
-    info(
-        f"Lambda function '{function_name}' created successfully in '{function_dir}'."
-    )
+    info(f"Lambda function '{function_name}' created successfully in '{function_dir}'.")

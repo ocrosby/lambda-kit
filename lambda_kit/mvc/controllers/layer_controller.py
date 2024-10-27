@@ -4,13 +4,11 @@ This module contains the LayerController class.
 
 import os
 import sys
-
 from typing import Callable
 
 from lambda_kit.mvc.models import LayerModel
 from lambda_kit.mvc.views import LayerView
-
-from lambda_kit.utils.aws_lambda import is_python_layer, is_python_lambda
+from lambda_kit.utils.aws_lambda import is_python_lambda, is_python_layer
 
 
 class LayerController:
@@ -67,11 +65,15 @@ class LayerController:
         if is_python_layer(self.model.source_dir, self.view.info):
             self.view.info(f"Todo: Package Lambda layer: {self.model.name}")
         else:
-            self.view.info(f"{self.model.source_dir} does not appear to be a Python Lambda layer.")
+            self.view.info(
+                f"{self.model.source_dir} does not appear to be a Python Lambda layer."
+            )
             sys.exit(1)
 
 
-def create_layer_mvc(source_dir: str, info: Callable) -> tuple[LayerModel, LayerView, LayerController]:
+def create_layer_mvc(
+    source_dir: str, info: Callable
+) -> tuple[LayerModel, LayerView, LayerController]:
     """
     Create a model, view, and controller for a Lambda layer.
 
