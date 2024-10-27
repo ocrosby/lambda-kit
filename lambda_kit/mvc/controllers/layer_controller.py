@@ -80,13 +80,26 @@ class LayerController:
         if self.model.source_dir is None:
             raise ValueError("Source directory not set.")
 
-        if is_python_layer(self.model.source_dir, self.view.info):
-            self.view.info(f"Todo: Package Lambda layer: {self.model.name}")
-        else:
-            self.view.info(
-                f"{self.model.source_dir} does not appear to be a Python Lambda layer."
-            )
+        if not is_python_layer(self.model.source_dir, self.view.info):
+            self.view.info(f"{self.model.source_dir} isn't a Python Lambda layer.")
             sys.exit(1)
+
+        # https://docs.aws.amazon.com/lambda/latest/dg/packaging-layers.html
+        # Step 1. Bundle all of your layer content into a .zip file archive.
+
+        # Because Lambda functions run on Amazon Linux, your layer content must be
+        # able to compile and build in a Linux environment.
+
+        # When you add a layer to a function, Lambda loads the layer content into
+        # the /opt directory of that execution environment.  For each Lambda
+        # runtime, the PATH variable already includes specific folder paths within
+        # the /opt directory.  To ensure that the PATH variable picks up your layer
+        # content, your layer .zip file should have it's dependencies in the
+        # following folder paths:
+
+        # python
+        # python/lib/python3.x/site-packages (site directories)
+        self.view.info(f"Todo: Package Lambda layer: {self.model.name}")
 
     @staticmethod
     def create() -> "LayerController":
