@@ -29,8 +29,10 @@ kit = "lambda_kit.__main__:cli"
 
 [tool.black]
 line-length = 88
-target-version = [ "py36", "py37", "py38", "py39", "py310",]
+target-version = [ "py39", "py310", "py311", "py312", "py313",]
 include = "\\.pyi?$"
+skip-magic-trailing-comma = false
+skip-string-normalization = false
 
 [tool.pylint]
 output-format = "text"

@@ -18,9 +18,7 @@ def lambda_handler(event: dict, context: lambda_context.Context) -> dict[str, an
     name = event.get("name", "World")
     message = f"Hello, {name}!"
 
-    body = {
-        "message": message
-    }
+    body = {"message": message}
 
     # Create the response object
     response = {"statusCode": 200, "body": json.dumps(body)}

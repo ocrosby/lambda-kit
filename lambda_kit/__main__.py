@@ -30,6 +30,7 @@ def echo_wrapper(message: str) -> None:
     """Wrapper for click.echo."""
     click.echo(message)
 
+
 @function.command("init")
 @click.argument("source-dir")
 @click.option(
@@ -203,6 +204,7 @@ def package_layer(source_dir: str, output_dir: str) -> None:
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     cli()
