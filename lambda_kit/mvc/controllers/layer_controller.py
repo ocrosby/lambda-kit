@@ -8,6 +8,7 @@ import sys
 from lambda_kit.mvc.models import LayerModel
 from lambda_kit.mvc.views import LayerView
 from lambda_kit.utils.aws_lambda import is_python_layer
+from lambda_kit.utils.directory import create_directory
 
 
 class LayerController:
@@ -68,6 +69,18 @@ class LayerController:
 
         return True
 
+    def create_python_directory(self, version: str) -> None:
+        """
+        Create the directory `python/lib/python<version>/site-packages`.
+
+        :param version: The Python version string (e.g., '3.11').
+        """
+        directory_path = f"python/lib/python{version}/site-packages"
+        directory_path = os.path.join(self.model.output_dir, directory_path)
+        os.makedirs(directory_path, exist_ok=True)
+
+        self.view.info(f"Directory '{directory_path}' created successfully.")
+
     def package(self) -> None:
         """
         Package a Lambda layer.
@@ -75,7 +88,9 @@ class LayerController:
         self.view.info(f"Packaging Lambda layer: {self.model.name}")
         self.view.info(f"Source directory: {self.model.source_dir}")
         self.view.info(f"Output directory: {self.model.output_dir}")
+
         # Add your packaging logic here
+        self.create_python_directory(self.model.python_version)
 
         if self.model.source_dir is None:
             raise ValueError("Source directory not set.")

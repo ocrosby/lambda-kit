@@ -197,8 +197,12 @@ def package_layer(source_dir: str, output_dir: str) -> None:
 
         model.source_dir = source_dir
         model.output_dir = output_dir
+        model.python_version = "3.13"
 
         controller.package()
     except FileExistsError as err:
         click.echo(err)
         sys.exit(1)
+
+if __name__ == "__main__":
+    cli()
