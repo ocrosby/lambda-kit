@@ -8,7 +8,6 @@ import sys
 from lambda_kit.mvc.models import LayerModel
 from lambda_kit.mvc.views import LayerView
 from lambda_kit.utils.aws_lambda import is_python_layer
-from lambda_kit.utils.directory import create_directory
 
 
 class LayerController:
@@ -75,6 +74,9 @@ class LayerController:
 
         :param version: The Python version string (e.g., '3.11').
         """
+        if self.model.output_dir is None:
+            raise ValueError("Output directory not set.")
+
         directory_path = f"python/lib/python{version}/site-packages"
         directory_path = os.path.join(self.model.output_dir, directory_path)
         os.makedirs(directory_path, exist_ok=True)
@@ -85,6 +87,9 @@ class LayerController:
         """
         Package a Lambda layer.
         """
+        if self.model.python_version is None:
+            raise ValueError("Python version not set.")
+
         self.view.info(f"Packaging Lambda layer: {self.model.name}")
         self.view.info(f"Source directory: {self.model.source_dir}")
         self.view.info(f"Output directory: {self.model.output_dir}")
